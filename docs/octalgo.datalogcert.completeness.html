@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>octalgo.datalogcert.completeness</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">octalgo.datalogcert.completeness</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+                                                                                                             The DatalogCert Library                                                                                                                           CNRS &amp; Université Paris-Sud, Université Paris-Saclay                                                                                                                         Copyright 2016-2019 : FormalData                                                                                                                   Authors: Véronique Benzaken                                                               Évelyne Contejean                                                                Stefania Dumbrava                                                                                                                               
+<div class="paragraph"> </div>
+
+ This is the eigth and last part of the original file "pengine.v" with modifications
+    by Pierre-Léo Bégay. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.syntax.html#"><span class="id" title="library">syntax</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.subs.html#"><span class="id" title="library">subs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.pmatch.html#"><span class="id" title="library">pmatch</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.bSemantics.html#"><span class="id" title="library">bSemantics</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.monotonicity.html#"><span class="id" title="library">monotonicity</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.soundness.html#"><span class="id" title="library">soundness</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.fixpoint.html#"><span class="id" title="library">fixpoint</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Completeness"><span class="id" title="section">Completeness</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab117"></a><h1 class="section">Completeness</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> <a name="Completeness.n"><span class="id" title="variable">n</span></a>   : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>.<br/>
+</div>
+
+<div class="doc">
+default constant 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> <a name="Completeness.def"><span class="id" title="variable">def</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>.<br/>
+</div>
+
+<div class="doc">
+program 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> <a name="Completeness.p"><span class="id" title="variable">p</span></a>   : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>.<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> is safe 
+</div>
+<div class="code">
+<span class="id" title="keyword">Hypothesis</span> <a name="Completeness.p_safe"><span class="id" title="variable">p_safe</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#prog_safe"><span class="id" title="definition">prog_safe</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a>.<br/>
+</div>
+
+<div class="doc">
+the set of ground atoms 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="bp"><span class="id" title="definition">bp</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#setT"><span class="id" title="abbreviation">setT</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Proof that B(P) is a model of the safe program <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="bpM"><span class="id" title="lemma">bpM</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#prog_true"><span class="id" title="definition">prog_true</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#bp"><span class="id" title="definition">bp</span></a>.<br/>
+ 
+<br/>
+</div>
+
+<div class="doc">
+There is a set of ground atoms, shuch that it is an iteration
+ of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#fwd_chain"><span class="id" title="definition">fwd_chain</span></a></span> from the empty set, it is a model of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> and it is
+ the smallest one 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="fwd_chain_complete"><span class="id" title="lemma">fwd_chain_complete</span></a> :<br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">{</span></a> <span class="id" title="var">m</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">:</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">&amp;</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">{</span></a> <span class="id" title="var">n</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">:</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">|</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#d7e433f5d2fe56f5b712860a9ff2a681"><span class="id" title="notation">[/\</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#prog_true"><span class="id" title="definition">prog_true</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m"><span class="id" title="variable">m</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#d7e433f5d2fe56f5b712860a9ff2a681"><span class="id" title="notation">,</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#n"><span class="id" title="variable">n</span></a> (<a class="idref" href="octalgo.datalogcert.bSemantics.html#fwd_chain"><span class="id" title="definition">fwd_chain</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a>) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#set0"><span class="id" title="definition">set0</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#d7e433f5d2fe56f5b712860a9ff2a681"><span class="id" title="notation">&amp;</span></a> <span class="id" title="keyword">∀</span> <span class="id" title="var">m'</span>, <a class="idref" href="octalgo.datalogcert.syntax.html#prog_true"><span class="id" title="definition">prog_true</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m'"><span class="id" title="variable">m'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m'"><span class="id" title="variable">m'</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#d7e433f5d2fe56f5b712860a9ff2a681"><span class="id" title="notation">]</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">}</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">}</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab118"></a><h2 class="section">Forward Chain Completeness:</h2>
+
+Let <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> be a safe program. The iterative forward chain
+inference engine terminates (after iterating as many times as there are elements in B(P)) 
+and outputs a minimal model for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="incr_fwd_chain_complete"><span class="id" title="lemma">incr_fwd_chain_complete</span></a> (<span class="id" title="var">s0</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>) :<br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">{</span></a> <span class="id" title="var">m</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">:</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">&amp;</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">{</span></a> <span class="id" title="var">n</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">:</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">|</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#554fc3f3cf0a27fe0863b7741d119014"><span class="id" title="notation">[/\</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#prog_true"><span class="id" title="definition">prog_true</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m"><span class="id" title="variable">m</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#554fc3f3cf0a27fe0863b7741d119014"><span class="id" title="notation">,</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">#|</span></a><a class="idref" href="octalgo.datalogcert.completeness.html#bp"><span class="id" title="definition">bp</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">|</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#554fc3f3cf0a27fe0863b7741d119014"><span class="id" title="notation">,</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#n"><span class="id" title="variable">n</span></a> (<a class="idref" href="octalgo.datalogcert.bSemantics.html#fwd_chain"><span class="id" title="definition">fwd_chain</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a>) <a class="idref" href="octalgo.datalogcert.completeness.html#s0"><span class="id" title="variable">s0</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#554fc3f3cf0a27fe0863b7741d119014"><span class="id" title="notation">&amp;</span></a> <span class="id" title="keyword">∀</span> (<span class="id" title="var">m'</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>), <a class="idref" href="octalgo.datalogcert.completeness.html#s0"><span class="id" title="variable">s0</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m'"><span class="id" title="variable">m'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#prog_true"><span class="id" title="definition">prog_true</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m'"><span class="id" title="variable">m'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.completeness.html#m'"><span class="id" title="variable">m'</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#554fc3f3cf0a27fe0863b7741d119014"><span class="id" title="notation">]</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">}</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#cc5e56ba3765e2d6b17e66d19b966f1d"><span class="id" title="notation">}</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="octalgo.datalogcert.completeness.html#Completeness"><span class="id" title="section">Completeness</span></a>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>octalgo.octalgo.depsubs_filter</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">octalgo.octalgo.depsubs_filter</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+                                                                        This file is part of octant-proof.                                                                                                            Copyright (C) 2019-2020 Orange                                         License: LGPL-3.0-or-later                                           
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.syntax.html#"><span class="id" title="library">syntax</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.subs.html#"><span class="id" title="library">subs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.pmatch.html#"><span class="id" title="library">pmatch</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.bSemantics.html#"><span class="id" title="library">bSemantics</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.tSemantics.html#"><span class="id" title="library">tSemantics</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.soundness.html#"><span class="id" title="library">soundness</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.dTypes.html#"><span class="id" title="library">dTypes</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.ddTypes.html#"><span class="id" title="library">ddTypes</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.rules.html#"><span class="id" title="library">rules</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.ctransfo.html#"><span class="id" title="library">ctransfo</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.depsubs.html#"><span class="id" title="library">depsubs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.depsubs_completeness.html#"><span class="id" title="library">depsubs_completeness</span></a>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.third_party.bigop_aux.html#"><span class="id" title="library">bigop_aux</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.utils.html#"><span class="id" title="library">utils</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.finseqs.html#"><span class="id" title="library">finseqs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.fintrees.html#"><span class="id" title="library">fintrees</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="cadequacy"><span class="id" title="section">cadequacy</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Variable</span> <a name="cadequacy.p"><span class="id" title="variable">p</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>.<br/>
+<span class="id" title="keyword">Variable</span> <a name="cadequacy.i"><span class="id" title="variable">i</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#interp"><span class="id" title="abbreviation">interp</span></a>.<br/>
+<span class="id" title="keyword">Variable</span> <a name="cadequacy.def"><span class="id" title="variable">def</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>.<br/>
+<span class="id" title="keyword">Variable</span> <a name="cadequacy.dv"><span class="id" title="variable">dv</span></a>  : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">'</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">I_n</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab152"></a><h1 class="section"><span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs"><span class="id" title="definition">dep_subs</span></a></span> captures all substitutions for the semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span></h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Hypothesis</span> <a name="cadequacy.psafe"><span class="id" title="variable">psafe</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#prog_safe"><span class="id" title="definition">prog_safe</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a>.<br/>
+<span class="id" title="keyword">Hypothesis</span> <a name="cadequacy.phsafe"><span class="id" title="variable">phsafe</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#prog_safe_hds"><span class="id" title="definition">prog_safe_hds</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a>.<br/>
+<span class="id" title="keyword">Hypothesis</span> <a name="cadequacy.pvars"><span class="id" title="variable">pvars</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#vars_not_shared"><span class="id" title="definition">vars_not_shared</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a>.<br/>
+<span class="id" title="keyword">Hypothesis</span> <a name="cadequacy.ext_edb"><span class="id" title="variable">ext_edb</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#safe_edb"><span class="id" title="definition">safe_edb</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.i"><span class="id" title="variable">i</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+assuming a typing to study 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> <a name="cadequacy.typing"><span class="id" title="variable">typing</span></a> : <span class="id" title="keyword">∀</span> <span class="id" title="var">v</span>, <a class="idref" href="octalgo.octalgo.rules.html#var_type"><span class="id" title="record">var_type</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#v"><span class="id" title="variable">v</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Variable</span> <a name="cadequacy.dga"><span class="id" title="variable">dga</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The substitutions matching <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> in the semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> verify <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs_cl"><span class="id" title="definition">dep_subs_cl</span></a></span>
+  for the the typing <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.typing"><span class="id" title="variable">typing</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="subs_comp_cl"><span class="id" title="lemma">subs_comp_cl</span></a> : <span class="id" title="keyword">∀</span> (<span class="id" title="var">s</span> : <a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a>) (<span class="id" title="var">cl</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#clause"><span class="id" title="inductive">clause</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="octalgo.octalgo.depsubs_filter.html#cl"><span class="id" title="variable">cl</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.pmatch.html#match_body"><span class="id" title="definition">match_body</span></a> (<a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.i"><span class="id" title="variable">i</span></a>) (<a class="idref" href="octalgo.datalogcert.syntax.html#body_cl"><span class="id" title="definition">body_cl</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cl"><span class="id" title="variable">cl</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs_cl"><span class="id" title="definition">dep_subs_cl</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.i"><span class="id" title="variable">i</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.typing"><span class="id" title="variable">typing</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cl"><span class="id" title="variable">cl</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Any substitution in the semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span> is in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs"><span class="id" title="definition">dep_subs</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.typing"><span class="id" title="variable">typing</span></a></span>.
+ This will imply that using <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs"><span class="id" title="definition">dep_subs</span></a></span> as basis for program specialization
+ will not loose any deduced fact. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="subs_comp"><span class="id" title="lemma">subs_comp</span></a> : <span class="id" title="keyword">∀</span> (<span class="id" title="var">s</span> : <a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a>) (<span class="id" title="var">cl</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#clause"><span class="id" title="inductive">clause</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="octalgo.octalgo.depsubs_filter.html#cl"><span class="id" title="variable">cl</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.pmatch.html#match_body"><span class="id" title="definition">match_body</span></a> (<a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.i"><span class="id" title="variable">i</span></a>) (<a class="idref" href="octalgo.datalogcert.syntax.html#body_cl"><span class="id" title="definition">body_cl</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cl"><span class="id" title="variable">cl</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs"><span class="id" title="definition">dep_subs</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.i"><span class="id" title="variable">i</span></a> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy.typing"><span class="id" title="variable">typing</span></a>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="octalgo.octalgo.depsubs_filter.html#cadequacy"><span class="id" title="section">cadequacy</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

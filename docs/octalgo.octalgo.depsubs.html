@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>octalgo.octalgo.depsubs</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">octalgo.octalgo.depsubs</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+                                                                        This file is part of octant-proof.                                                                                                            Copyright (C) 2019-2020 Orange                                         License: LGPL-3.0-or-later                                           
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.syntax.html#"><span class="id" title="library">syntax</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.subs.html#"><span class="id" title="library">subs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.dTypes.html#"><span class="id" title="library">dTypes</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.ddTypes.html#"><span class="id" title="library">ddTypes</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.rules.html#"><span class="id" title="library">rules</span></a>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.third_party.bigop_aux.html#"><span class="id" title="library">bigop_aux</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.utils.html#"><span class="id" title="library">utils</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.finseqs.html#"><span class="id" title="library">finseqs</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Transformation"><span class="id" title="section">Transformation</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab146"></a><h1 class="section">Definition of dependent substitutions of clauses for a typing</h1>
+ <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> a program and <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span> an interpretation 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> <a name="Transformation.p"><span class="id" title="variable">p</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>.<br/>
+<span class="id" title="keyword">Variable</span> <a name="Transformation.i"><span class="id" title="variable">i</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#interp"><span class="id" title="abbreviation">interp</span></a>.<br/>
+<span class="id" title="keyword">Variable</span> <a name="Transformation.def"><span class="id" title="variable">def</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+assuming a typing to study 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> <a name="Transformation.var_typing"><span class="id" title="variable">var_typing</span></a> : <span class="id" title="keyword">∀</span> <span class="id" title="var">v</span>, <a class="idref" href="octalgo.octalgo.rules.html#var_type"><span class="id" title="record">var_type</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#v"><span class="id" title="variable">v</span></a>.<br/>
+</div>
+
+<div class="doc">
+A ground atom 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> <a name="Transformation.dga"><span class="id" title="variable">dga</span></a> : <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><span class="id" title="var">typed_var</span></span> is the set of variables for which the type is not top 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="typed_vars"><span class="id" title="definition">typed_vars</span></a> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#9e3f1d0cf47c39e3927b1f03a0797327"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#9e3f1d0cf47c39e3927b1f03a0797327"><span class="id" title="notation">set</span></a> <span class="id" title="var">v</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#9e3f1d0cf47c39e3927b1f03a0797327"><span class="id" title="notation">|</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#ea6c97f834d69613538d4da1fb704b25"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#ea6c97f834d69613538d4da1fb704b25"><span class="id" title="notation">∃</span></a> <span class="id" title="var">t</span><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f3be25edeb0349b0a76405eded9d0b98"><span class="id" title="notation">,</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.rules.html#var_typ"><span class="id" title="projection">var_typ</span></a> (<a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.var_typing"><span class="id" title="variable">var_typing</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#v"><span class="id" title="variable">v</span></a>)<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">)</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="octalgo.octalgo.dTypes.html#Tr"><span class="id" title="constructor">Tr</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#t"><span class="id" title="variable">t</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#ea6c97f834d69613538d4da1fb704b25"><span class="id" title="notation">]</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#9e3f1d0cf47c39e3927b1f03a0797327"><span class="id" title="notation">]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#tvars"><span class="id" title="definition">tvars</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> gives back the variables of the clause having a non top type 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="tvars"><span class="id" title="definition">tvars</span></a> (<span class="id" title="var">cl</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#clause"><span class="id" title="inductive">clause</span></a>) :=<br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.octalgo.depsubs.html#typed_vars"><span class="id" title="definition">typed_vars</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#b9596739b058766532fc6517a36fef9f"><span class="id" title="notation">:&amp;:</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#tail_vars"><span class="id" title="definition">tail_vars</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#body_cl"><span class="id" title="definition">body_cl</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+returns the seq of the \/-set(s) of branches for each type 
+   with the associated variable                               
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="seq_of_conj_trees"><span class="id" title="definition">seq_of_conj_trees</span></a> <span class="id" title="var">cl</span> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#dcd18413b33436252c77b6c6465f02bc"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#dcd18413b33436252c77b6c6465f02bc"><span class="id" title="notation">seq</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">set</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.depsubs.html#v"><span class="id" title="variable">v</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">,</span></a><a class="idref" href="octalgo.octalgo.depsubs.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">)</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">|</span></a> <span class="id" title="var">x</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">in</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.dTypes.html#dt_get_dcb"><span class="id" title="definition">dt_get_dcb</span></a> (<a class="idref" href="octalgo.octalgo.rules.html#var_typ"><span class="id" title="projection">var_typ</span></a> (<a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.var_typing"><span class="id" title="variable">var_typing</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#v"><span class="id" title="variable">v</span></a>))<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">)]</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#dcd18413b33436252c77b6c6465f02bc"><span class="id" title="notation">|</span></a> <span class="id" title="var">v</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#dcd18413b33436252c77b6c6465f02bc"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#dcd18413b33436252c77b6c6465f02bc"><span class="id" title="notation">(</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#enum"><span class="id" title="abbreviation">enum</span></a> (<a class="idref" href="octalgo.octalgo.depsubs.html#tvars"><span class="id" title="definition">tvars</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>)<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#dcd18413b33436252c77b6c6465f02bc"><span class="id" title="notation">)]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#stv"><span class="id" title="definition">stv</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> is the number of typed variables of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="stv"><span class="id" title="definition">stv</span></a> <span class="id" title="var">cl</span> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">#|</span></a><a class="idref" href="octalgo.octalgo.depsubs.html#tvars"><span class="id" title="definition">tvars</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">|</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+technical lemma on size of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#seq_of_conj_trees"><span class="id" title="definition">seq_of_conj_trees</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="seq_of_conj_trees_size"><span class="id" title="lemma">seq_of_conj_trees_size</span></a> <span class="id" title="var">cl</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#size"><span class="id" title="definition">size</span></a> (<a class="idref" href="octalgo.octalgo.depsubs.html#seq_of_conj_trees"><span class="id" title="definition">seq_of_conj_trees</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#stv"><span class="id" title="definition">stv</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+same as seq_of_conj_trees as a tuple 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="tup_of_conj_trees"><span class="id" title="definition">tup_of_conj_trees</span></a> <span class="id" title="var">cl</span> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.tuple.html#tcast"><span class="id" title="definition">tcast</span></a> (<a class="idref" href="octalgo.octalgo.depsubs.html#seq_of_conj_trees_size"><span class="id" title="lemma">seq_of_conj_trees_size</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>) (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.tuple.html#in_tuple"><span class="id" title="definition">in_tuple</span></a> (<a class="idref" href="octalgo.octalgo.depsubs.html#seq_of_conj_trees"><span class="id" title="definition">seq_of_conj_trees</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+returns the cartesian product (ie. all combinations) of 
+   /\ trees of the different (non-trivial) types            { &lt; (v1,c_v1), (v2,c_v2), ..., (vn,c_vn) &gt; } i.e., \/ was unfolded 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="conj_branches_comb"><span class="id" title="definition">conj_branches_comb</span></a> <span class="id" title="var">cl</span> := <br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.octalgo.utils.html#setXn"><span class="id" title="definition">setXn</span></a> (<a class="idref" href="octalgo.octalgo.depsubs.html#tup_of_conj_trees"><span class="id" title="definition">tup_of_conj_trees</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Two branche coincide if they have the same size and the atom they
+  refer to are the same (but may be not the terms) 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="dep"><span class="id" title="definition">dep</span></a> (<span class="id" title="var">b1</span> <span class="id" title="var">b2</span> : <a class="idref" href="octalgo.octalgo.dTypes.html#dbranch"><span class="id" title="definition">dbranch</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a>) := <br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">(</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#size"><span class="id" title="definition">size</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b1"><span class="id" title="variable">b1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#size"><span class="id" title="definition">size</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b2"><span class="id" title="variable">b2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">)</span></a> <br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#all"><span class="id" title="definition">all</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> ⇒ <a class="idref" href="octalgo.octalgo.dTypes.html#pred_occ"><span class="id" title="definition">pred_occ</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrfun.html#e0817251e7d67ad994b4d9b1aa82a412"><span class="id" title="notation">.1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="octalgo.octalgo.dTypes.html#pred_occ"><span class="id" title="definition">pred_occ</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrfun.html#675082cc4d4538da052b547bdc6ea4c9"><span class="id" title="notation">.2</span></a>) (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#zip"><span class="id" title="definition">zip</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b1"><span class="id" title="variable">b1</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b2"><span class="id" title="variable">b2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This is a reflexive relation 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="dep_refl"><span class="id" title="lemma">dep_refl</span></a> (<span class="id" title="var">b</span> : <a class="idref" href="octalgo.octalgo.dTypes.html#dbranch"><span class="id" title="definition">dbranch</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a>): <a class="idref" href="octalgo.octalgo.depsubs.html#dep"><span class="id" title="definition">dep</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b"><span class="id" title="variable">b</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This is symmetric 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="dep_comm"><span class="id" title="lemma">dep_comm</span></a> (<span class="id" title="var">b1</span> <span class="id" title="var">b2</span> : <a class="idref" href="octalgo.octalgo.dTypes.html#dbranch"><span class="id" title="definition">dbranch</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a>) : <a class="idref" href="octalgo.octalgo.depsubs.html#dep"><span class="id" title="definition">dep</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b1"><span class="id" title="variable">b1</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b2"><span class="id" title="variable">b2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#dep"><span class="id" title="definition">dep</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b2"><span class="id" title="variable">b2</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b1"><span class="id" title="variable">b1</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+It is also transitive (it is an equivalence relation) 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="dep_trans"><span class="id" title="lemma">dep_trans</span></a> (<span class="id" title="var">b1</span> <span class="id" title="var">b2</span> <span class="id" title="var">b3</span> : <a class="idref" href="octalgo.octalgo.dTypes.html#dbranch"><span class="id" title="definition">dbranch</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a>) : <a class="idref" href="octalgo.octalgo.depsubs.html#dep"><span class="id" title="definition">dep</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b1"><span class="id" title="variable">b1</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b2"><span class="id" title="variable">b2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#dep"><span class="id" title="definition">dep</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b2"><span class="id" title="variable">b2</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b3"><span class="id" title="variable">b3</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#dep"><span class="id" title="definition">dep</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b1"><span class="id" title="variable">b1</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#b3"><span class="id" title="variable">b3</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Extension of dep to a pair variable and branch. We are looking
+   for groups of variables having branches verifying <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#dep"><span class="id" title="definition">dep</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="vdep"><span class="id" title="definition">vdep</span></a> (<span class="id" title="var">x1</span> <span class="id" title="var">x2</span> : (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">'</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">I_n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#11c698c8685bb8ab1cf725545c085ac4"><span class="id" title="notation">×</span></a> <a class="idref" href="octalgo.octalgo.dTypes.html#dbranch"><span class="id" title="definition">dbranch</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a>)%<span class="id" title="keyword">type</span>) : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+checking whether s v matches the branch br and ga that were picked  <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#ga_match_br"><span class="id" title="definition">ga_match_br</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.dTypes.html#br"><span class="id" title="variable">br</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> iff the last element of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.dTypes.html#br"><span class="id" title="variable">br</span></a></span> is <span class="inlinecode"><a class="idref" href="octalgo.octalgo.dTypes.html#tocc"><span class="id" title="variable">tocc</span></a></span>
+  that refers to an atom <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> such that the symbol of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> is the
+  symbol of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span> and the term referered by <span class="inlinecode"><a class="idref" href="octalgo.octalgo.dTypes.html#tocc"><span class="id" title="variable">tocc</span></a></span> in <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span> is <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="ga_match_br"><span class="id" title="definition">ga_match_br</span></a> (<span class="id" title="var">ga</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a>) (<span class="id" title="var">br</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#seq"><span class="id" title="abbreviation">seq</span></a> (<a class="idref" href="octalgo.octalgo.dTypes.html#t_occ_finType"><span class="id" title="definition">t_occ_finType</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a>)) (<span class="id" title="var">v</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">'</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">I_n</span></a>) (<span class="id" title="var">s</span> : <a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a>) : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a> :=<br/>
+<span class="id" title="keyword">match</span> <a class="idref" href="octalgo.octalgo.depsubs.html#br"><span class="id" title="variable">br</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;<br/>
+| <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#0a934e621391740b862762275992e626"><span class="id" title="notation">[::]</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a><br/>
+| <span class="id" title="var">a</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#407cde5b61fbf27196d1a7c5a475e083"><span class="id" title="notation">::</span></a> <span class="id" title="var">l</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="octalgo.octalgo.depsubs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">c</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="octalgo.octalgo.dTypes.html#p_at"><span class="id" title="definition">p_at</span></a> (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#last"><span class="id" title="definition">last</span></a> <span class="id" title="var">a</span> <span class="id" title="var">l</span>) <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">pred</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.datalogcert.syntax.html#sym_gatom"><span class="id" title="definition">sym_gatom</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#ga"><span class="id" title="variable">ga</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <span class="id" title="var">pred</span><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.utils.html#nth_error"><span class="id" title="definition">nth_error</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#arg_gatom"><span class="id" title="definition">arg_gatom</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#ga"><span class="id" title="variable">ga</span></a>) (<a class="idref" href="octalgo.octalgo.dTypes.html#t_ind"><span class="id" title="projection">t_ind</span></a> (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#last"><span class="id" title="definition">last</span></a> <span class="id" title="var">a</span> <span class="id" title="var">l</span>)) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">c</span><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a> <span class="id" title="keyword">end</span> <span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs_cl"><span class="id" title="definition">dep_subs_cl</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> computes the set of substitution that one can apply
+  on <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> while respecting the dependencies between variables of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span>.
+   <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#par"><span class="id" title="variable">par</span></a></span> is a group of variables with identic branches up to atoms.
+   Each corespond to a clause that must be added.
+    There must be an atom in the interpretation that makes the match for
+    <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and the different variables in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#par"><span class="id" title="variable">par</span></a></span>. The <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#par"><span class="id" title="variable">par</span></a></span> are built by
+    considering the types of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="dep_subs_cl"><span class="id" title="definition">dep_subs_cl</span></a> (<span class="id" title="var">cl</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#clause"><span class="id" title="inductive">clause</span></a>) : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> := <br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">bigcup_</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">(</span></a><span class="id" title="var">vtyps</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#conj_branches_comb"><span class="id" title="definition">conj_branches_comb</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">)</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6ac1c202d9451e0a66d4fc93e5d9b44b"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6ac1c202d9451e0a66d4fc93e5d9b44b"><span class="id" title="notation">set</span></a> <span class="id" title="var">s</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6ac1c202d9451e0a66d4fc93e5d9b44b"><span class="id" title="notation">:</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6ac1c202d9451e0a66d4fc93e5d9b44b"><span class="id" title="notation">|</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">∀</span></a> <span class="id" title="var">par</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">in</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">(</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#equivalence_partition"><span class="id" title="definition">equivalence_partition</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#vdep"><span class="id" title="definition">vdep</span></a> (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">bigcup_</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">(</span></a><span class="id" title="var">vt</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#vtyps"><span class="id" title="variable">vtyps</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">)</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">set</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.depsubs.html#vt"><span class="id" title="variable">vt</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrfun.html#e0817251e7d67ad994b4d9b1aa82a412"><span class="id" title="notation">.1</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">,</span></a><a class="idref" href="octalgo.octalgo.depsubs.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">)</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">|</span></a> <span class="id" title="var">x</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">in</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">(</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#pred_of_set"><span class="id" title="abbreviation">pred_of_set</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#vt"><span class="id" title="variable">vt</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrfun.html#675082cc4d4538da052b547bdc6ea4c9"><span class="id" title="notation">.2</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">)]</span></a>)<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">)</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f3be25edeb0349b0a76405eded9d0b98"><span class="id" title="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f302e204901821a508e6d6d00228c0ed"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f302e204901821a508e6d6d00228c0ed"><span class="id" title="notation">∃</span></a> <span class="id" title="var">ga</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f302e204901821a508e6d6d00228c0ed"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.i"><span class="id" title="variable">i</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f3be25edeb0349b0a76405eded9d0b98"><span class="id" title="notation">,</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">∀</span></a> <span class="id" title="var">vb</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">in</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">(</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#pred_of_set"><span class="id" title="abbreviation">pred_of_set</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#par"><span class="id" title="variable">par</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">)</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f3be25edeb0349b0a76405eded9d0b98"><span class="id" title="notation">,</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#ga_match_br"><span class="id" title="definition">ga_match_br</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#ga"><span class="id" title="variable">ga</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#vb"><span class="id" title="variable">vb</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrfun.html#675082cc4d4538da052b547bdc6ea4c9"><span class="id" title="notation">.2</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#vb"><span class="id" title="variable">vb</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrfun.html#e0817251e7d67ad994b4d9b1aa82a412"><span class="id" title="notation">.1</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#s"><span class="id" title="variable">s</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">]</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f302e204901821a508e6d6d00228c0ed"><span class="id" title="notation">]</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">]</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6ac1c202d9451e0a66d4fc93e5d9b44b"><span class="id" title="notation">]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs"><span class="id" title="definition">dep_subs</span></a></span> is the set of dependent substitutions for the program 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="dep_subs"><span class="id" title="definition">dep_subs</span></a> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">bigcup_</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">(</span></a><span class="id" title="var">cl</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation.p"><span class="id" title="variable">p</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3807eb776e98d53eeae3c7eceb88122d"><span class="id" title="notation">)</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#dep_subs_cl"><span class="id" title="definition">dep_subs_cl</span></a> <a class="idref" href="octalgo.octalgo.depsubs.html#cl"><span class="id" title="variable">cl</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="octalgo.octalgo.depsubs.html#Transformation"><span class="id" title="section">Transformation</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

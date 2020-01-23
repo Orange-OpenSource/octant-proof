@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>octalgo.datalogcert.fixpoint</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">octalgo.datalogcert.fixpoint</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+                                                                                                             The DatalogCert Library                                                                                                                           CNRS &amp; Université Paris-Sud, Université Paris-Saclay                                                                                                                         Copyright 2016-2019 : FormalData                                                                                                                   Authors: Véronique Benzaken                                                               Évelyne Contejean                                                                Stefania Dumbrava                                                                                                                               
+<div class="paragraph"> </div>
+
+ This is the seventh part of the original file "pengine.v" with modifications
+    by Pierre-Léo Bégay. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+</div>
+
+<div class="doc">
+<a name="lab116"></a><h1 class="section">Fixed Points</h1>
+ Once a fixed point is reached. Any iteration gives the fixed point 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="fix_iter"><span class="id" title="lemma">fix_iter</span></a> <span class="id" title="var">T</span> (<span class="id" title="var">f</span> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#T"><span class="id" title="variable">T</span></a>) <span class="id" title="var">n</span> <span class="id" title="var">s</span> (<span class="id" title="var">s_fix</span> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>) : <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>.<br/>
+ 
+<br/>
+</div>
+
+<div class="doc">
+If after n iteration, fixpoint is reached so is after m for m &gt; n 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="iter_leq_fix"><span class="id" title="lemma">iter_leq_fix</span></a> <span class="id" title="var">T</span> (<span class="id" title="var">f</span> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#T"><span class="id" title="variable">T</span></a>) <span class="id" title="var">x</span> <span class="id" title="var">n</span> <span class="id" title="var">m</span> (<span class="id" title="var">i_eq</span>: <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#bda89d73ec4a8f23ae92b565ffb5aaa6"><span class="id" title="notation">.+1</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#x"><span class="id" title="variable">x</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#m"><span class="id" title="variable">m</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#bda89d73ec4a8f23ae92b565ffb5aaa6"><span class="id" title="notation">.+1</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#x"><span class="id" title="variable">x</span></a>.<br/>
+ 
+<br/>
+</div>
+
+<div class="doc">
+note: minsetP lemma subsumes all this 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="iter_mon"><span class="id" title="section">iter_mon</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Variables</span> (<a name="iter_mon.T"><span class="id" title="variable">T</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#Finite.Exports.finType"><span class="id" title="abbreviation">finType</span></a>).<br/>
+<span class="id" title="keyword">Implicit</span> <span class="id" title="keyword">Types</span> (<span class="id" title="var">s</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>) (<span class="id" title="var">f</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Increasing function 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="monotone"><span class="id" title="definition">monotone</span></a>   <span class="id" title="var">f</span> := <span class="id" title="keyword">∀</span> <span class="id" title="var">s1</span> <span class="id" title="var">s2</span>, <a class="idref" href="octalgo.datalogcert.fixpoint.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s2"><span class="id" title="variable">s2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Inflating function 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="increasing"><span class="id" title="definition">increasing</span></a> <span class="id" title="var">f</span> := <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>, <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>.<br/>
+</div>
+
+<div class="doc">
+Let f be an increasing function on sets ot <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.T"><span class="id" title="variable">T</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variables</span> (<a name="iter_mon.f"><span class="id" title="variable">f</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>) (<a name="iter_mon.f_mon"><span class="id" title="variable">f_mon</span></a> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#monotone"><span class="id" title="definition">monotone</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#f"><span class="id" title="variable">f</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> increasing so is <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a>^<a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.n"><span class="id" title="variable">n</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="iter_mon"><span class="id" title="lemma">iter_mon</span></a> <span class="id" title="var">n</span> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#monotone"><span class="id" title="definition">monotone</span></a> (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.f"><span class="id" title="variable">f</span></a>).<br/>
+ 
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.lb"><span class="id" title="variable">lb</span></a></span> such that if <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> contains <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.lb"><span class="id" title="variable">lb</span></a></span>, so does <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variable</span> (<a name="iter_mon.lb"><span class="id" title="variable">lb</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>) (<a name="iter_mon.f_lb"><span class="id" title="variable">f_lb</span></a> : <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>, <a class="idref" href="octalgo.datalogcert.fixpoint.html#lb"><span class="id" title="variable">lb</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#lb"><span class="id" title="variable">lb</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#iterf"><span class="id" title="definition">iterf</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.completeness.html#Completeness.n"><span class="id" title="variable">n</span></a></span> is |f^n(lb)]
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="iterf"><span class="id" title="definition">iterf</span></a> <span class="id" title="var">n</span> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon.lb"><span class="id" title="variable">lb</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#iterf"><span class="id" title="definition">iterf</span></a></span> is increasing 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="subset_iterf"><span class="id" title="lemma">subset_iterf</span></a> <span class="id" title="var">m</span> <span class="id" title="var">n</span> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iterf"><span class="id" title="definition">iterf</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iterf"><span class="id" title="definition">iterf</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="octalgo.datalogcert.fixpoint.html#iter_mon"><span class="id" title="section">iter_mon</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Fixpoints"><span class="id" title="section">Fixpoints</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ub and s0 sets of T where T is a finite type  with s0 subset of ub 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variables</span> (<a name="Fixpoints.T"><span class="id" title="variable">T</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#Finite.Exports.finType"><span class="id" title="abbreviation">finType</span></a>) (<a name="Fixpoints.s0"><span class="id" title="variable">s0</span></a> <a name="Fixpoints.ub"><span class="id" title="variable">ub</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Hypothesis</span> (<a name="Fixpoints.s0_bound"><span class="id" title="variable">s0_bound</span></a> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Implicit</span> <span class="id" title="keyword">Types</span> (<span class="id" title="var">s</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>) (<span class="id" title="var">f</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Variables</span> (<a name="Fixpoints.f"><span class="id" title="variable">f</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#ubound"><span class="id" title="definition">ubound</span></a></span> means if <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a></span> contains <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, it also contains <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="ubound"><span class="id" title="definition">ubound</span></a> := <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>, <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>  <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+we assume that <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> is monotone increasing and verifies <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#ubound"><span class="id" title="definition">ubound</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Hypothesis</span> (<a name="Fixpoints.f_mono"><span class="id" title="variable">f_mono</span></a> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#monotone"><span class="id" title="definition">monotone</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a>) (<a name="Fixpoints.f_inc"><span class="id" title="variable">f_inc</span></a> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#increasing"><span class="id" title="definition">increasing</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a>) (<a name="Fixpoints.f_ubound"><span class="id" title="variable">f_ubound</span></a>: <a class="idref" href="octalgo.datalogcert.fixpoint.html#ubound"><span class="id" title="definition">ubound</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="iterf_incr"><span class="id" title="abbreviation">iterf_incr</span></a> <span class="id" title="var">n</span> := (<a class="idref" href="octalgo.datalogcert.fixpoint.html#iterf"><span class="id" title="definition">iterf</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a> <span class="id" title="var">n</span>).<br/>
+<span class="id" title="keyword">Notation</span> <a name="lfp_incr"><span class="id" title="abbreviation">lfp_incr</span></a>     := (<a class="idref" href="octalgo.datalogcert.fixpoint.html#iterf"><span class="id" title="definition">iterf</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">#|</span></a><a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">|</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a>^(<a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a>)</span> is included in <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="iterf_incr_bound"><span class="id" title="lemma">iterf_incr_bound</span></a> <span class="id" title="var">n</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.datalogcert.fixpoint.html#iterf_incr"><span class="id" title="abbreviation">iterf_incr</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#n"><span class="id" title="variable">n</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">)</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a>.<br/>
+ 
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp_incr"><span class="id" title="abbreviation">lfp_incr</span></a></span>, the N iterate of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> where N is the cardinal of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a></span>
+  is a fixpoint for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span>
+
+<div class="paragraph"> </div>
+
+Adapted from the lfpE lemma in http://www.ps.uni-saarland.de/extras/jaritp14/
+   (C) Christian Doczkal and Gert Smolka 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="lfpE"><span class="id" title="lemma">lfpE</span></a> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp_incr"><span class="id" title="abbreviation">lfp_incr</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp_incr"><span class="id" title="abbreviation">lfp_incr</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp_incr"><span class="id" title="abbreviation">lfp_incr</span></a></span> is smaller than any fixpoint that would be greater than
+   <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a></span> the starting point of the iterations 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="min_lfp_all"><span class="id" title="lemma">min_lfp_all</span></a> <span class="id" title="var">s</span> (<span class="id" title="var">hs</span> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>) (<span class="id" title="var">sfp</span> : <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>) : <a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp_incr"><span class="id" title="abbreviation">lfp_incr</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s"><span class="id" title="variable">s</span></a>.<br/>
+ 
+<br/>
+</div>
+
+<div class="doc">
+Rephrase the existence of the LFP and its properties 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="has_lfp"><span class="id" title="lemma">has_lfp</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">{</span></a> <span class="id" title="var">lfp</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">:</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.T"><span class="id" title="variable">T</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">|</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp"><span class="id" title="variable">lfp</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp"><span class="id" title="variable">lfp</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp"><span class="id" title="variable">lfp</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">#|</span></a><a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.ub"><span class="id" title="variable">ub</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#234f50e13366f794cd6877cf832a5935"><span class="id" title="notation">|</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <span class="id" title="keyword">∀</span> <span class="id" title="var">s'</span>, <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.s0"><span class="id" title="variable">s0</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints.f"><span class="id" title="variable">f</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#lfp"><span class="id" title="variable">lfp</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.fixpoint.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#6556914db359db999889decec6a4a562"><span class="id" title="notation">}</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="octalgo.datalogcert.fixpoint.html#Fixpoints"><span class="id" title="section">Fixpoints</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

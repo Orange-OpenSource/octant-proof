@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>octalgo.datalogcert.bSemantics</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">octalgo.datalogcert.bSemantics</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+                                                                                                             The DatalogCert Library                                                                                                                           CNRS &amp; Université Paris-Sud, Université Paris-Saclay                                                                                                                         Copyright 2016-2019 : FormalData                                                                                                                   Authors: Véronique Benzaken                                                               Évelyne Contejean                                                                Stefania Dumbrava                                                                                                                               
+<div class="paragraph"> </div>
+
+ This is the fourth part of the original file "pengine.v" with a new part added
+    by Pierre-Léo Bégay 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.syntax.html#"><span class="id" title="library">syntax</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.subs.html#"><span class="id" title="library">subs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.pmatch.html#"><span class="id" title="library">pmatch</span></a>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.third_party.bigop_aux.html#"><span class="id" title="library">bigop_aux</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.finseqs.html#"><span class="id" title="library">finseqs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.octalgo.utils.html#"><span class="id" title="library">utils</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab96"></a><h1 class="section">Semantics of a Datalog program</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="bSemantics"><span class="id" title="section">bSemantics</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab97"></a><h2 class="section">Consequences of a clause</h2>
+
+<div class="paragraph"> </div>
+
+ one iteration of fwd_chain for a one-clause program  Given a clause <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a>:</span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#h"><span class="id" title="variable">h</span></a></span> <span class="inlinecode">:-</span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#b"><span class="id" title="variable">b</span></a></span> gives back <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#h"><span class="id" title="variable">h</span></a></span> for all <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> that match
+ <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#b"><span class="id" title="variable">b</span></a></span> in interpretation <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span>. <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.def"><span class="id" title="variable">def</span></a></span> is usually not used as <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> should be safe and does not introduce variables in its head. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="cons_clause"><span class="id" title="definition">cons_clause</span></a> (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">cl</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#clause"><span class="id" title="inductive">clause</span></a>) <span class="id" title="var">i</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#gr_atom_def"><span class="id" title="definition">gr_atom_def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#s"><span class="id" title="variable">s</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#head_cl"><span class="id" title="definition">head_cl</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#cl"><span class="id" title="variable">cl</span></a>) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">|</span></a> <span class="id" title="var">s</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.pmatch.html#match_body"><span class="id" title="definition">match_body</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#body_cl"><span class="id" title="definition">body_cl</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#cl"><span class="id" title="variable">cl</span></a>)<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#1e993786ab46c6f2c0d488e43f629b71"><span class="id" title="notation">]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If clause verifies safe_cl_hd then the symbols we get are all in IDB 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="cons_clause_idb"><span class="id" title="lemma">cons_clause_idb</span></a> (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">cl</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#clause"><span class="id" title="inductive">clause</span></a>) <span class="id" title="var">i</span> :<br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.syntax.html#safe_cl_hd"><span class="id" title="definition">safe_cl_hd</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#cl"><span class="id" title="variable">cl</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">∀</span></a> <span class="id" title="var">x</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#cons_clause"><span class="id" title="definition">cons_clause</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#cl"><span class="id" title="variable">cl</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f3be25edeb0349b0a76405eded9d0b98"><span class="id" title="notation">,</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#predtype"><span class="id" title="axiom">predtype</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#sym_gatom"><span class="id" title="definition">sym_gatom</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#x"><span class="id" title="variable">x</span></a>) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#Idb"><span class="id" title="constructor">Idb</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+one iteration of fwd_chain for a program 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="fwd_chain"><span class="id" title="definition">fwd_chain</span></a> <span class="id" title="var">def</span> <span class="id" title="var">p</span> <span class="id" title="var">i</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#3bfdad100117c55128c8f4e205b0209b"><span class="id" title="notation">:|:</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">bigcup_</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">(</span></a><span class="id" title="var">cl</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#6831c3e6cae5ef17f89a485d9445f0cb"><span class="id" title="notation">)</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#cons_clause"><span class="id" title="definition">cons_clause</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#cl"><span class="id" title="variable">cl</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab98"></a><h2 class="section">Semantic of a program up to m steps</h2>
+
+<div class="paragraph"> </div>
+
+ <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.finseqs.html#d"><span class="id" title="variable">d</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#m"><span class="id" title="variable">m</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span> iterates fwd_chain m times over i. Added to the original files 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="sem"><span class="id" title="definition">sem</span></a> (<span class="id" title="var">p</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>) (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) (<span class="id" title="var">i</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#interp"><span class="id" title="abbreviation">interp</span></a>) :=<br/>
+&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#iter"><span class="id" title="definition">iter</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#m"><span class="id" title="variable">m</span></a> (<a class="idref" href="octalgo.datalogcert.bSemantics.html#fwd_chain"><span class="id" title="definition">fwd_chain</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a>) <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a></span> is increasing for subset 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="sem_m_incr"><span class="id" title="lemma">sem_m_incr</span></a> (<span class="id" title="var">p</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>) (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) (<span class="id" title="var">i</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#interp"><span class="id" title="abbreviation">interp</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#m"><span class="id" title="variable">m</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#bda89d73ec4a8f23ae92b565ffb5aaa6"><span class="id" title="notation">.+1</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> has safe heads, 
+   <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a></span> is safe (only defines elements in the IDB or it was in i_init 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="sem_idb_safe"><span class="id" title="lemma">sem_idb_safe</span></a> (<span class="id" title="var">p</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>) (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) <span class="id" title="var">i_init</span> :<br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.syntax.html#prog_safe_hds"><span class="id" title="definition">prog_safe_hds</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">∀</span></a> <span class="id" title="var">x</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">in</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#160b1f5d5c3e3c6d274924649d717d8d"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i_init"><span class="id" title="variable">i_init</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#160b1f5d5c3e3c6d274924649d717d8d"><span class="id" title="notation">)</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#160b1f5d5c3e3c6d274924649d717d8d"><span class="id" title="notation">:\:</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i_init"><span class="id" title="variable">i_init</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f3be25edeb0349b0a76405eded9d0b98"><span class="id" title="notation">,</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#predtype"><span class="id" title="axiom">predtype</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#sym_gatom"><span class="id" title="definition">sym_gatom</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#x"><span class="id" title="variable">x</span></a>) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#Idb"><span class="id" title="constructor">Idb</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b40a7420e06ba2a775d87b43bd1c69f"><span class="id" title="notation">]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> has safe heads, any atom in the semantics from the EDB comes from <span class="inlinecode"><a class="idref" href="octalgo.octalgo.tSemantics.html#init"><span class="id" title="variable">init</span></a></span> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="sem_idb_in"><span class="id" title="lemma">sem_idb_in</span></a> (<span class="id" title="var">p</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>) (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) <span class="id" title="var">i_init</span> <span class="id" title="var">ga</span> :<br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.syntax.html#prog_safe_hds"><span class="id" title="definition">prog_safe_hds</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#ga"><span class="id" title="variable">ga</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i_init"><span class="id" title="variable">i_init</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.syntax.html#predtype"><span class="id" title="axiom">predtype</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#sym_gatom"><span class="id" title="definition">sym_gatom</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#ga"><span class="id" title="variable">ga</span></a>) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#Edb"><span class="id" title="constructor">Edb</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#ga"><span class="id" title="variable">ga</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i_init"><span class="id" title="variable">i_init</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="octalgo.datalogcert.bSemantics.html#bSemantics"><span class="id" title="section">bSemantics</span></a>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+-R . octalgo
+-arg -w -arg none
+third_party/bigop_aux.v
+octalgo/utils.v
+octalgo/finseqs.v
+octalgo/fintrees.v
+datalogcert/syntax.v
+datalogcert/subs.v
+datalogcert/pmatch.v
+datalogcert/bSemantics.v
+datalogcert/monotonicity.v
+datalogcert/soundness.v
+datalogcert/fixpoint.v
+datalogcert/completeness.v
+octalgo/purge.v
+octalgo/dTypes.v
+octalgo/tSemantics.v
+octalgo/ddTypes.v
+octalgo/rules.v
+octalgo/ctransfo.v
+octalgo/depsubs.v
+octalgo/depsubs_completeness.v
+octalgo/depsubs_filter.v
+octalgo/depsubs_adequacy.v
