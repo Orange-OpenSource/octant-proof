@@ -1,9 +1,8 @@
 (**************************************************************************)
-(**                                                                       *)
-(**  This file is part of octant-proof.                                   *)
-(**                                                                       *)
-(**  Copyright (C) 2019-2020 Orange                                       *)
-(**  License: LGPL-3.0-or-later                                           *)
+(*                                                                        *)
+(*  This file is part of octant-proof.                                    *)
+(*                                                                        *)
+(*  Copyright (C) 2019-2020 Orange                                        *)
 (*                                                                        *)
 (*  you can redistribute it and/or modify it under the terms of the GNU   *)
 (*  Lesser General Public License as published by the Free Software       *)
@@ -22,12 +21,12 @@
 (**************************************************************************)
 
 Require Import syntax.
+Require Import occurrences.
 Require Import subs.
 Require Import pmatch.
 Require Import bSemantics.
 Require Import monotonicity.
 Require Import soundness.
-Require Import dTypes.
 
 From mathcomp
 Require Import ssreflect ssrbool ssrnat eqtype seq ssrfun choice fintype tuple finset bigop finfun.
@@ -49,6 +48,8 @@ Implicit Types (s r : sub) (d def : syntax.constant) (t : term) (a : atom)
 Section tSemantics.
 
 Variable p : program.
+Variable gat_def : gatom.
+
 (** * Trace semantics *)
 (** ** Rule grounding *)
 Section rul_gr.
@@ -98,8 +99,6 @@ End rul_gr.
 
 (** ** Semantic trees (traces) *)
 Section trace_sem_trees.
-
-Variable gat_def : gatom.
 
 (** A semantic tree is a tree with bounded width [bn] (the maximal size of
   the body of clause),

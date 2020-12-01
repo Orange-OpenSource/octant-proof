@@ -6,14 +6,13 @@
 (**                                                                                 *)
 (**                        Copyright 2016-2019 : FormalData                         *)
 (**                                                                                 *)
-(**         Authors: Véronique Benzaken                                             *)
-(**                  Évelyne Contejean                                              *)
-(**                  Stefania Dumbrava                                              *)
+(**         Original authors: Véronique Benzaken                                    *)
+(**                           Évelyne Contejean                                     *)
+(**                           Stefania Dumbrava                                     *)
 (**                                                                                 *)
 (************************************************************************************)
 
-(** This is the third part of the original file "pengine.v" with some modifications
-    by Pierre-Léo Bégay *)
+(** Third part of the original file "pengine.v" with some modifications *)
 
 Require Import utils.
 Require Import syntax.
@@ -149,7 +148,7 @@ Lemma foldSU A (T : finType) f (s1 s2 : {set T}) (l : seq A) :
   foldS f (s1 :|: s2) l = foldS f s1 l :|: foldS f s2 l.
 Proof. by elim: l => //= x l ihl; rewrite bindSU. Qed.
 
-(** matching a list of atoms [tl] agains ground atoms of an interpretation [i] *)
+(** matching a list of atoms [tl]Z agains ground atoms of an interpretation [i] *)
 Definition match_body i tl : {set sub} :=
   foldS (match_atom_all i) [set emptysub] tl.
 
@@ -163,7 +162,7 @@ Variable def : syntax.constant.
 Definition bmatch i cl s : bool :=
   (** if s does not cover tl's variables, no *)
   (** otherwise, it's okay to cast s to gr with a random constant *)
-  if (cl_vars cl \subset dom s) then
-  all (mem i) (body_gcl (gr_cl (to_gr def s) cl)) else false.
+   (cl_vars cl \subset dom s)
+&& all (mem i) (gr_tl (to_gr def s) (body_cl cl)).
 
 End Match.

@@ -6,14 +6,14 @@
 (**                                                                                 *)
 (**                        Copyright 2016-2019 : FormalData                         *)
 (**                                                                                 *)
-(**         Authors: Véronique Benzaken                                             *)
-(**                  Évelyne Contejean                                              *)
-(**                  Stefania Dumbrava                                              *)
+(**         Original authors: Véronique Benzaken                                    *)
+(**                           Évelyne Contejean                                     *)
+(**                           Stefania Dumbrava                                     *)
 (**                                                                                 *)
 (************************************************************************************)
 
-(** This is the fith part of the original file "pengine.v" with modifications
-    by Pierre-Léo Bégay. Some names were changed. *)
+(** Fifth part of the original file "pengine.v" with modifications
+    (including some names that were changed). *)
 
 Require Import utils.
 Require Import syntax.
@@ -92,7 +92,14 @@ apply/bigcup_seqP. exists cl.
 apply (subsetP Hs cl cl_in). apply H.
 Qed.
 
-End Increasing.
+(** [sem] is increasing wrt. for each iteration *)
+Lemma sem_m_incr (p : program) (def : syntax.constant) (m : nat) (i : interp) :
+  sem p def m i \subset sem p def m.+1 i.
+Proof.
+induction m as [|m Hm];apply/subsetP=>x.
+move=>/= Hxin. apply/setUP. by left.
+move=>Hxin. apply/setUP. by left.
+Qed.
 
 Section Overlinear.
 
@@ -100,4 +107,33 @@ Section Overlinear.
 Lemma fwd_chain_inc i p def : i \subset fwd_chain def p i.
 Proof. exact: subsetUl. Qed.
 
+(**[sem i] greater than [i] *)
+Lemma sem_inc i m p def : i \subset sem def p m i.
+Proof. 
+induction m as [|m Hrec].
+auto.
+apply/subset_trans. apply Hrec. apply sem_m_incr.
+Qed.
+
 End Overlinear.
+
+(** The iteration of [fwd_chain pp] on [i] contains [i]*)
+Lemma iter_fwd_chain_subset def p (i : interp) k :
+  i \subset iter k (fwd_chain def p) i.
+Proof.
+elim: k => //= k ihk; rewrite (subset_trans (fwd_chain_inc i p def)) //.
+exact: fwd_chain_incr.
+Qed.
+
+(** [sem] is increasing wrt. number of iterations *)
+Lemma sem_m_star_incr (p : program) (def : syntax.constant) (m m' : nat) (i : interp) :
+  m < m' -> sem p def m i \subset sem p def m' i.
+Proof.
+move:m'. induction m as [|m Hrec];
+move=>[|m'] //= H.
+apply/subset_trans. apply sem_inc.
+apply (@iter_fwd_chain_subset def p (sem p def m' i) 1).
+apply/fwd_chain_incr/Hrec/H.
+Qed.
+
+End Increasing.

@@ -1,6 +1,7 @@
 *.vo
-.*.aux
+.*aux
 *.glob
+*.aux
 Makefile.conf
 .coqdeps.d
 html

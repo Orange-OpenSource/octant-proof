@@ -1,9 +1,8 @@
 (**************************************************************************)
-(**                                                                       *)
-(**  This file is part of octant-proof.                                   *)
-(**                                                                       *)
-(**  Copyright (C) 2019-2020 Orange                                       *)
-(**  License: LGPL-3.0-or-later                                           *)
+(*                                                                        *)
+(*  This file is part of octant-proof.                                    *)
+(*                                                                        *)
+(*  Copyright (C) 2019-2020 Orange                                        *)
 (*                                                                        *)
 (*  you can redistribute it and/or modify it under the terms of the GNU   *)
 (*  Lesser General Public License as published by the Free Software       *)
@@ -34,6 +33,11 @@ Unset Strict Implicit.
 (** ** bool *)
 Section boolUtils.
 
+Lemma ite_id {A : Type} (b : bool) (x : A) : (if b then x else x) = x.
+Proof.
+by destruct b.
+Qed.
+
 Lemma bool_to_prop_l (a b : bool) : (a && b) -> a.
 Proof.
 by move => /andP [].
@@ -61,6 +65,12 @@ End boolUtils.
 
 Section nat.
 
+Lemma pred_ltn0_l : forall n m , n > 0 -> n.-1 = m -> n = m.+1.
+Proof.
+destruct n as [|n];move=>m // H.
+rewrite PeanoNat.Nat.pred_succ. by move=>->.
+Qed.
+
 Lemma ltn_leq_trans : forall n m p : nat, m < n -> n <= p -> m < p.
 Proof.
 move => n m p.
@@ -72,6 +82,11 @@ destruct p.
 - move => n m Hmn.
   rewrite leq_eqVlt.
   by move=>/orP [/eqP <- |];[|apply ltn_trans].
+Qed.
+
+Lemma pred_ltn : forall n m, n.+1 < m -> n < m.
+Proof.
+move=>n m H. apply (ltn_trans (ltnSn n) H).
 Qed.
 
 (** *** Lemmas on max *)
@@ -103,6 +118,26 @@ End max.
 End nat.
 
 (** ** Finset *)
+
+Section notin.
+
+Lemma set_notin_f_in {A : finType} (x : A) (s : {set A}) :
+  x \notin s = false -> x \in s.
+Proof.
+destruct (bool_des_rew (x \in s)) as [H|H].
+auto.
+by rewrite H.
+Qed.
+
+Lemma seq_notin_f_in {A : eqType} (x : A) (s : seq A) :
+  x \notin s = false -> x \in s.
+Proof.
+destruct (bool_des_rew (x \in s)) as [H|H].
+auto.
+by rewrite H.
+Qed.
+
+End notin.
 
 Section finset.
 
@@ -310,6 +345,99 @@ induction s.
     - by rewrite (IHs H).
 Qed.
 
+(** *** set_nth *)
+
+Lemma set_nth_notin_base {A : eqType} (x y def : A) (i : nat) :
+   x != def
+-> x != y
+-> x \notin iter i (cons def) [:: y].
+Proof.
+induction i as [|i Hrec];
+move=>Hxdef Hxy //=;rewrite in_cons negb_or;
+apply/andP;split;auto.
+Qed.
+
+Lemma set_nth_notin {A : eqType} (x y def : A) (l : seq A) (i : nat) : 
+   x != def
+-> x != y
+-> x \notin l -> x \notin set_nth def l i y.
+Proof.
+move:x y i.
+induction l as [|h l Hrec];
+move=>x y [|i] Hxdef Hxy Hnotin //=;
+rewrite in_cons negb_or;apply/andP;split;auto.
+- by apply/set_nth_notin_base.
+- rewrite in_cons negb_or in Hnotin.
+  by destruct (andP Hnotin).
+- rewrite in_cons negb_or in Hnotin.
+  by destruct (andP Hnotin).
+- apply/Hrec;auto.
+  rewrite in_cons negb_or in Hnotin.
+  by destruct (andP Hnotin). 
+Qed.
+
+(** *** sremove: trying to remove the element at a given index *)
+
+Fixpoint sremove {A : Type} (s : seq A)  (i : nat) : seq A :=
+  match i with
+      0 => behead s 
+    | i.+1 => match s with 
+      | [::] => [::]
+      | a::l => a::sremove l i end end.
+
+Lemma sremove_size {A : Type} (s : seq A) (j : 'I_(size s)) :
+  size s = (size (sremove s j)).+1.
+Proof.
+move:j.
+induction s as [|h s Hs]; move=> [j Hj].
+inversion Hj.
+destruct j as [|j]. auto. 
+assert (Hib : j < size s). apply Hj. simpl.
+by rewrite (Hs (Ordinal Hib)).
+Qed.
+
+Lemma sremove_in_size {A : Type} (s : seq A) (j : nat) :
+  j < size s -> size (sremove s j) = (size s).-1.
+Proof.
+move:s. induction j as [|j Hj];move=>[|h l] // H.
+simpl in H. rewrite -addn1 -(@addn1 (size l)) (@leq_add2r 1) in H. 
+simpl. rewrite Hj. by rewrite (ltn_predK H). apply H.
+Qed.
+
+Lemma sremove_map {A B : Type} (s : seq A) (j : nat) (f : A -> B) :
+  sremove (map f s) j = map f (sremove s j).
+Proof.
+move:s. induction j as [|j Hj];move=>[|h l] //=.
+apply/f_equal/Hj.
+Qed.
+
+Lemma sremove_rem {A : eqType} (s : seq A) (j : nat) (x : A) :
+   find (fun y => y == x) s = j
+-> j < size s
+-> sremove s j = rem x s.
+Proof.
+move:j x.
+induction s as [|h s Hrec];
+move=>[|j] x //=.
+- by destruct (bool_des_rew (h == x)) as [Hhx|Hhx];
+  rewrite Hhx.
+- destruct (bool_des_rew (h == x)) as [Hhx|Hhx];
+  rewrite Hhx;move=>H Hsize.
+  + inversion H.
+  + inversion H as [Hb]. 
+    apply/f_equal/Hrec. auto. rewrite Hb. apply Hsize.
+Qed.
+
+Lemma sremove_nth {A : eqType} (s : seq A) (j : nat) (x y : A) :
+    j < size s
+-> sremove (set_nth x s j y) j = sremove s j.
+Proof.
+move:j.
+induction s as [|h s Hrec];
+move=>[|j] //= Hsize.
+apply/f_equal/Hrec/Hsize.
+Qed.
+
 End rem. 
 
 Section size_map_leq.
@@ -328,6 +456,17 @@ End size_map_leq.
 
 Section all.
 (** *** all *)
+
+Lemma in_nth_P {A : eqType} (def : A) (s : seq A) (P : pred A) j :
+ all P s -> j < size s -> P (nth def s j).
+Proof.
+move:s def P.
+induction j as [|j Hrec];
+move=>[|h s] def P //=.
+- move=>/andP [] //.
+- move=>/andP [H1 H2] H3.
+  apply/Hrec. apply H2. apply H3.
+Qed.
 
 Lemma all_exist_seq {A B : finType} (s : seq A) P : 
     all (fun x => [exists im : B, P x im]) s 
@@ -421,33 +560,23 @@ Lemma seq_inj T (x y : T) (xs ys : seq T) :
   [:: x & xs] = [:: y & ys] -> x = y /\ xs = ys.
 Proof. by case. Qed.
 
-End seq.
-
-(** * Various definitions *)
-
-(** *** dep_iota: returning a sequence of nats as ordinals *)
-
-Definition dep_iota (m n : nat) : seq ('I_(m+n)) :=
-  pmap insub (iota m n).
-
-Lemma dep_iotaE (m n : nat) : map val (dep_iota m n) = iota m n.
+Lemma seq_in_ind {A : eqType} (def x : A) (s : seq A) :
+   x \in s
+-> exists y : 'I_(size s), nth def s y = x.
 Proof.
-move:m. 
-induction n as [|n Hn] => [|m] //=.
-unfold dep_iota. simpl. unfold oapp.
-rewrite insubT. 
-rewrite addnS -addSn. 
-by apply ltn_addr. 
-move=>H /=.
-by rewrite -addSnnS (Hn m.+1).
-Qed.
-
-Lemma size_dep_iota (m n : nat) : size (dep_iota m n) = n. 
-Proof. 
-by rewrite -(size_map val) dep_iotaE size_iota. 
+induction s as [|h s Hrec].
+by rewrite in_nil.
+rewrite in_cons. move=>/orP[H|H].
+assert (H0 : 0 < size (h :: s)). auto.
+exists (Ordinal H0). simpl. by rewrite (eqP H).
+destruct (Hrec H) as [[z Hz1] Hz2].
+assert (Hz3 : z.+1 < (size (h :: s))). 
+apply Hz1.
+exists (Ordinal Hz3). simpl. apply Hz2.
 Qed.
 
 (** *** nth_error: trying to get the i-th element of a seq *)
+Section nth_error.
 
 (* source: https://coq.inria.fr/library/Coq.Lists.List.html *)
 Fixpoint nth_error (A : Type) (l:seq A) (n:nat) {struct n} : option A :=
@@ -476,12 +605,100 @@ by move=>[->].
 move=>/= H. apply/IHl/H.
 Qed.
 
+Lemma nth_error_map_none (A B : eqType) (f: A -> B) (l:seq A) (n:nat): 
+  nth_error l n = None -> nth_error (map f l) n = None.
+Proof.
+move:n.
+induction l ; destruct n as [|n] ; try (by []). 
+move=>/= H. apply/IHl/H.
+Qed.
+
+Lemma nth_error_nth (A : eqType) (l : seq A) (x def : A) (n : nat) :
+  nth_error l n = Some x -> nth def l n = x.
+Proof.
+move:x n. induction l as [|h l Hrec];
+move=>x [|n] //=.
+- by move=>[->].
+- apply/Hrec.
+Qed.
+
+Lemma nth_error_ncons1 {A : Type} (m n : nat) (x:A) :
+   n <= m
+-> nth_error (ncons m x [:: x]) n = Some x.
+Proof.
+move:m x.
+induction n as [|n Hrec];
+move=>[|m] x Hm //=.
+apply/Hrec/Hm.
+Qed.
+
+Lemma nth_error_set_nth {A : Type} (l:seq A) (n:nat) (x:A) :
+  nth_error (set_nth x l n x) n = Some x.
+Proof.
+move:x n.
+induction l as [|h l Hrec];
+move=>x [|n] //=.
+by apply/nth_error_ncons1.
+Qed.
+
+
 Lemma nth_error_preim {A B : eqType} (f : A -> B) (l : seq A) (y : B) (i : nat) :
   nth_error (map f l) i = Some y -> exists x : A, (nth_error l i = Some x /\ f x = y).
 Proof.
 move:i. induction l as [|h l Hl];move=>[|i]//=.
 move=>[<-]. by exists h.
 move=>H. apply/Hl/H.
+Qed.
+
+Lemma nth_error_in_size {A : Type} (l : seq A) (i : nat) (x : A) :
+  nth_error l i = Some x -> size l > i.
+Proof.
+move:l. induction i as [|i Hi];move=>[|h l] //= H.
+by apply Hi.
+Qed.
+
+Lemma nth_error_notin_size {A : Type} (l : seq A) (i : nat) :
+  nth_error l i = None -> size l <= i.
+Proof.
+move:l. induction i as [|i Hi];move=>[|h l] //= H.
+by apply Hi.
+Qed.
+
+Lemma nth_error_size_notin {A : Type} (l : seq A) (i : nat) :
+  size l <= i -> nth_error l i = None.
+Proof.
+move:l. induction i as [|i Hi];move=>[|h l] //= H.
+by apply Hi.
+Qed.
+
+Lemma nth_error_sremove {A : eqType} (l : seq A) (i : nat) (x y : A) :
+  nth_error l i = Some x
+-> x <> y
+-> y \in l = (y \in sremove l i).
+Proof.
+move:x y i.
+induction l as [|h l Hrec];
+move=>x y [|i] //=.
+- move=>[->] Hneq. rewrite in_cons Bool.orb_lazy_alt.
+  destruct (bool_des_rew (y == x)) as [Hf|Hf].
+  exfalso. apply/Hneq. by rewrite (eqP Hf). 
+  by rewrite Hf.
+- move=>Hnth Hneq. rewrite !in_cons.
+  apply/orb_id2l. move=>Hneqb.
+  apply (Hrec _ _ _ Hnth Hneq).
+Qed.
+
+Lemma nth_error_sremove_eq {A : eqType} (l1 l2 : seq A) (i : nat) :
+   nth_error l1 i = nth_error l2 i 
+-> sremove l1 i = sremove l2 i
+-> l1 = l2.
+Proof.
+move:l2 i.
+induction l1 as [|h1 l1 Hrec];
+move=>[|h2 l2] [|i] //=.
+- by move=>[->] H;apply/f_equal.
+- move=>Hnth [-> Htleq]. apply/f_equal.
+  apply/Hrec. apply Hnth. apply Htleq.
 Qed.
 
 Lemma tnth_nth_error {A : Type} (l : seq A) i : 
@@ -533,6 +750,113 @@ by left.
 right. exists x. split. by rewrite in_cons ; apply/orP;right. auto.
 Qed.
 
+Lemma nth_error_some_none_size {A B : Type} (l1 : seq A) (l2 : seq B) (x : A) (j : nat) :
+  nth_error l1 j = Some x -> nth_error l2 j = None -> size l1 = size l2 -> False.
+Proof.
+move=>H1 H2 H3.
+have Hf1:= nth_error_in_size H1.
+have Hf2 := nth_error_notin_size H2.
+rewrite H3 in Hf1. have Hf3 := leq_ltn_trans Hf2 Hf1.
+rewrite leqNgt ltnSn in Hf3. inversion Hf3.
+Qed.
+
+End nth_error.
+
+Section find.
+
+Lemma find_val {A : Type} {Q : pred A} {B : subType Q} (l : seq B) (P : pred A) :
+   find (fun x => P (val x)) l = find P (map val l).
+Proof.
+induction l as [|h l Hl];
+move=> //=.
+destruct (bool_des_rew (P (val h))) as [Hp|Hp];
+rewrite !Hp;auto.
+Qed.
+
+Lemma nth_default_size {A : eqType} (def : A) (l : seq A) (i : nat) :
+  nth def l i != def -> i < size l.
+Proof.
+move:i.
+induction l as [|l Hl].
+by destruct i;rewrite eq_refl.
+move=>[|i] //= Hnth.
+by apply IHHl. 
+Qed.
+
+(* generalize on uniq *)
+Lemma find_eq_nth_uniq {A : eqType} {def : A} (x : A) (l : seq A) (j : nat) :
+   nth def l j = x
+-> x != def
+-> uniq l
+-> find [pred y | y == x] l = j.
+Proof.
+move:j.
+induction l as [|z l Hl];
+move=>[|j] //=.
+- move=>->. by rewrite eq_refl.
+- move=>-> Hu. by rewrite eq_refl.
+- move=> Hnth Hnx /andP [Hzl Hul] /=.
+  destruct (bool_des_rew (z == x)) as [Hxz|Hxz].
+  + unfold negb in Hzl.
+    assert (Hzlb : x \in l). apply/nthP. exists j. 
+    apply/(@nth_default_size _ def l j). rewrite Hnth. apply Hnx.
+    apply Hnth. 
+    by rewrite (eqP Hxz) Hzlb in Hzl.
+  + rewrite Hxz. apply/f_equal/Hl. apply Hnth.
+    apply Hnx.
+    apply Hul.
+Qed.
+
+(* TODO: generalize *) 
+Lemma find_iota i k :
+   k < i
+-> find [pred x | x == k] (iota 0 i) = k.
+Proof.
+move=>Hki.
+apply (@find_eq_nth_uniq _ i.+1).
+by rewrite nth_iota. 
+rewrite neq_ltn. apply/orP;left.
+apply/ltn_trans. apply Hki. auto.
+apply iota_uniq.
+Qed.
+
+End find.
+
+End seq.
+
+(** * Various definitions *)
+
+(** *** dep_iota: returning a sequence of nats as ordinals *)
+
+Definition dep_iota (m n : nat) : seq ('I_(m+n)) :=
+  pmap insub (iota m n).
+
+Lemma dep_iotaE (m n : nat) : map val (dep_iota m n) = iota m n.
+Proof.
+move:m. 
+induction n as [|n Hn] => [|m] //=.
+unfold dep_iota. simpl. unfold oapp.
+rewrite insubT. 
+rewrite addnS -addSn. 
+by apply ltn_addr. 
+move=>H /=.
+by rewrite -addSnnS (Hn m.+1).
+Qed.
+
+Lemma dep_iota_uniq (m n : nat) : uniq (dep_iota m n).
+Proof.
+induction n as [|n Hn].
+auto.
+unfold dep_iota. 
+apply/pmap_uniq. apply insubK.
+apply/iota_uniq.
+Qed.
+
+Lemma size_dep_iota (m n : nat) : size (dep_iota m n) = n. 
+Proof. 
+by rewrite -(size_map val) dep_iotaE size_iota. 
+Qed.
+
 (** *** Equip the elements of a set with a property *)
 (** Thanks to Arthur Azevedo De Amorim *)
 Definition equip (T : finType) (P : pred T) (A : {set T}) : {set {x : T | P x}} :=
@@ -561,16 +885,18 @@ End Prod.
 
 (** *** Shifting operations on ordinals *)
 
-(* TODO: use widen_ord from fintype.v *)
 Section ord.
 
-Lemma ord_shift {i : nat} : forall x : 'I_i, x.+1 < i.+1.
+Lemma ord_shiftl {i : nat} : forall x : 'I_i, x.+1 < i.+1.
 Proof.
 move => x ; elim:x ; move => // m i0.
 Qed.
 
+Definition ord_shift {i : nat} (x : 'I_i) : 'I_i.+1 :=
+  Ordinal (ord_shiftl x).
+
 Definition shift {i j : nat} (l : j.-tuple 'I_i) : j.-tuple 'I_(i.+1) := 
-  [tuple of (map (fun (x : 'I_i) => @Ordinal i.+1 x.+1 (ord_shift x)) l)].
+  [tuple of (map (fun (x : 'I_i) =>  ord_shift x) l)].
 
 End ord.
 
@@ -720,5 +1046,6 @@ Qed.
 End all_prop.
 
 (** *** Cartesian product *)
-Definition setXn {A : finType} {m} (ss : m.-tuple {set A}) : 
-  {set m.-tuple A} := [set x | [forall j in 'I_m, tnth x j \in tnth ss j]].
+Definition gen_cart_prod {A : finType} (ss : seq {set A}) : {set (size ss).-tuple A} := 
+  let m := size ss in
+  [set x : m.-tuple A | [forall j : 'I_m, tnth x j \in tnth (in_tuple ss) j]].

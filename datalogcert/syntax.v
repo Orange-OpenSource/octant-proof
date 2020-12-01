@@ -6,14 +6,13 @@
 (**                                                                                 *)
 (**                        Copyright 2016-2019 : FormalData                         *)
 (**                                                                                 *)
-(**         Authors: Véronique Benzaken                                             *)
-(**                  Évelyne Contejean                                              *)
-(**                  Stefania Dumbrava                                              *)
+(**         Original authors: Véronique Benzaken                                    *)
+(**                           Évelyne Contejean                                     *)
+(**                           Stefania Dumbrava                                     *)
 (**                                                                                 *)
 (************************************************************************************)
 
-(** This is the first part of the original file "pengine.v" with some modifications 
-    by Pierre-Léo Bégay *)
+(** This is the first part of the original file "pengine.v" with some modifications *)
 
 From mathcomp
 Require Import ssreflect ssrbool ssrnat eqtype seq ssrfun choice fintype.
@@ -189,6 +188,17 @@ End GatomFinType.
 (** canonical instances for ground atoms *)
 Canonical gatom_finType := Eval hnf in FinType gatom (PcanFinMixin fenc_gatomK).
 Canonical gatom_subFinType := [subFinType of gatom].
+
+(** We can access the ith argument of a gatom with predicate whose
+  arity is greater than i *)
+Lemma oob_gatom_args (ga : gatom) (ind : 'I_(arity (sym_gatom ga))) : 
+  nth_error (arg_gatom ga) ind <> None.
+Proof.
+destruct ga as [[f args] Hwf].
+unfold wf_gatom in Hwf. move:ind.
+rewrite -(eqP Hwf).
+apply oob_nth_error.
+Qed.
 
 (** ** Ground Clauses:
 A ground clause [gclause] packs a ground atom head and a body list of ground atoms *)
@@ -392,7 +402,10 @@ Canonical atom_countType := Eval hnf in CountType _ [countMixin of atom by <:].
 (** *** Atoms are a finite type *)
 Section AtomFinType.
 
-(** We use as represention the triple size (smaller than max_r) symbol and tuples of terms of size the first *)
+(** We use as represention the triple with
+      - number of arguments (smaller than max_r) 
+      - symbol 
+      - |args|-tuples of terms *)
 Notation atom_enc := ({x : 'I_(max_ar.+1) & (symtype * x.-tuple term_finType)%type}).
 
 (** We can inject atom in this encoding *)
@@ -547,6 +560,15 @@ Definition tail_vars tl : {set 'I_n} := \bigcup_(t <- tl) atom_vars t.
 (** Extract variables from a clauses (as a set) *)
 Definition cl_vars (cl : clause) : {set 'I_n} := tail_vars (body_cl cl).
 
+Lemma raw_atom_vars_cons_sub g args h :
+raw_atom_vars (RawAtom g args) \subset raw_atom_vars (RawAtom g (h::args)).
+Proof.
+apply/subsetP=>x /bigcup_seqP [t H1 /andP [H2 _]].
+apply/bigcup_seqP. exists t. apply/mem_body/H1.
+apply/andP;split;auto.
+Qed.
+
+
 (** if [x] in the variables of [tl], then [x] is also a var of [a:: tl] *)
 Lemma tail_vars_cons x a tl : x \in tail_vars tl -> x \in tail_vars (a :: tl).
 Proof.
@@ -554,6 +576,28 @@ unfold tail_vars. move=> /bigcup_seqP [ga Hga1 Hga2].
 apply/bigcup_seqP. exists ga.
 rewrite in_cons. apply/orP. right. apply Hga1.
 apply Hga2.
+Qed.
+
+Lemma tail_vars_sub_cons a tl : tail_vars tl \subset tail_vars (a :: tl).
+Proof.
+apply/subsetP=>x Hx. apply/tail_vars_cons/Hx.
+Qed.
+
+Lemma tail_vars_consUP (tl : seq atom) (a : atom) :
+  tail_vars (a :: tl) = tail_vars [:: a] :|: tail_vars tl.
+Proof.
+apply/eqP;rewrite eqEsubset. apply/andP;split.
+- apply/subsetP=>x /bigcup_seqP [b Hbin /andP [H _]].
+  rewrite in_cons in Hbin. destruct (orP Hbin) as [Hbinb|Hbinb].
+  + apply/setUP;left. apply/bigcup_seqP. rewrite (eqP Hbinb) in H.
+    exists a. by rewrite mem_seq1. apply/andP;split;auto.
+  + apply/setUP;right. apply/bigcup_seqP. exists b.
+    apply Hbinb. apply/andP;split;auto.
+- apply/subsetP=>x /setUP [/bigcup_seqP [b Hbin /andP [H _]] | /bigcup_seqP [b Hbin /andP [H _]] ].
+  + apply/bigcup_seqP. rewrite mem_seq1 in Hbin. exists a. apply/mem_head.
+    rewrite -(eqP Hbin). apply/andP;split;auto.
+  + apply/bigcup_seqP. exists b. apply/mem_body/Hbin.
+    apply/andP;split;auto. 
 Qed.
 
 (** if [x] is a variable of [a] it is a variable of [a:: tl] *)
@@ -592,6 +636,15 @@ apply/eqP. rewrite -subset0. apply/subsetP. move=>x /bigcup_seqP [ato Hatoin].
 by rewrite in_nil in Hatoin.
 Qed.
 
+Lemma tail_vars_1 (a:atom) : tail_vars [:: a] = atom_vars a.
+Proof.
+apply/eqP. rewrite eqEsubset;apply/andP;split; 
+apply/subsetP=>x /bigcup_seqP [y Hy1 /andP [Hy2 Htriv]]. 
+rewrite mem_seq1 in Hy1. rewrite -(eqP Hy1). apply Hy2.
+apply/bigcup_seqP. exists a. by rewrite mem_seq1. apply/andP;split;auto.
+apply/bigcup_seqP. exists y. apply Hy1. apply/andP;split;auto.
+Qed.
+
 (** ** Program Safety Condition *)
 
 (** clause safety: all head variables should appear among the body variables *)
@@ -608,7 +661,7 @@ Definition safe_cl_hd cl :=
 
 Definition prog_safe_hds p := all safe_cl_hd p.
 
-(** An interpretation is a "safe edb" if alll its atoms have symbols
+(** An interpretation is a "safe edb" if all its atoms have symbols
   of type edb *)
 Definition safe_edb i := [forall ga in i, predtype (sym_gatom ga) == Edb].
 
@@ -665,6 +718,20 @@ induction p.
     apply (implyP (forallP (implyP (forallP vns _) Hcl1In) _) Hcl2In).
 Qed.
 
+Definition is_var (t : term) :=
+  match t with
+    Val _ => false
+  | Var _ => true end.
+
+Definition only_variables_atom (a : atom) :=
+  all is_var (arg_atom a).
+
+Definition only_variables_head (cl : clause) :=
+  only_variables_atom (head_cl cl).
+
+Definition only_variables_in_heads (p : program) :=
+  all only_variables_head p.
+
 (** ** Program Satisfiability *)
 
 (** a clause [c] is satisfied by an interpretation [i], if for all groundings [g]
@@ -674,6 +741,5 @@ Definition cl_true cl i := forall g : gr, gcl_true (gr_cl g cl) i.
 (** A program is true in i, if all grounding of its clauses are  true *)
 Definition prog_true p i :=
   forall g : gr, all (fun cl => gcl_true (gr_cl g cl) i) p.
-
 
 End Theory.

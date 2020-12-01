@@ -1,9 +1,8 @@
 (**************************************************************************)
-(**                                                                       *)
-(**  This file is part of octant-proof.                                   *)
-(**                                                                       *)
-(**  Copyright (C) 2019-2020 Orange                                       *)
-(**  License: LGPL-3.0-or-later                                           *)
+(*                                                                        *)
+(*  This file is part of octant-proof.                                    *)
+(*                                                                        *)
+(*  Copyright (C) 2019-2020 Orange                                        *)
 (*                                                                        *)
 (*  you can redistribute it and/or modify it under the terms of the GNU   *)
 (*  Lesser General Public License as published by the Free Software       *)
@@ -570,18 +569,18 @@ Fixpoint ABheight {A B : Type} (t : @ABtree A B) : nat := match t with
   | ABNode _ l => (foldr maxn 0 (map ABheight l)).+1 end.
 
 (** Check if an element of A is in an [ABtree A B] (in a node) *)
-Fixpoint ABin {A B : eqType} (x : A) (t : @ABtree A B) : bool :=
+Fixpoint ABin {A : eqType} {B : Type} (x : A) (t : @ABtree A B) : bool :=
   match t with
     | ABLeaf _ => false
     | ABNode y l => ((x == y) || (has (ABin x) l)) end.
 
 (** Check if an element of A is not in an [ABtree A B] (in a node) *)
-Definition ABnotin {A B : eqType} (x : A) (t : @ABtree A B) : bool :=
+Definition ABnotin {A : eqType} {B : Type} (x : A) (t : @ABtree A B) : bool :=
   ~~ ABin x t.
 
 (** If x is not in a tree, it is not the element of the root and it is not in
   the children of the root *)
-Lemma ABnotin_node_and {A B : eqType} (x : A) (y : A) (l : seq (@ABtree A B)) :
+Lemma ABnotin_node_and {A : eqType} {B : Type} (x : A) (y : A) (l : seq (@ABtree A B)) :
   ABnotin x (ABNode y l) = ((x != y) && (all (ABnotin x) l)).
 Proof.
 unfold ABnotin. simpl. apply/norP.
@@ -690,18 +689,20 @@ Qed.
 
 (** A tree is ABuniq, if on any path, the values associated to nodes appear
    only once *)
-Fixpoint ABuniq {A B : eqType} (t : @ABtree A B) : bool := match t with
+Fixpoint ABuniq {A : eqType} {B : Type} (t : @ABtree A B) : bool := match t with
   | ABLeaf _ => true
   | ABNode x l => ((all (ABnotin x) l) && (all ABuniq l)) end.
 
 (** technical: if t is ABuniq, so is its first child *)
-Lemma uniq_desc_l {A B : eqType} : forall h (a : ABtree A B) l,  ABuniq (ABNode h (a :: l)) -> ABuniq  a.
+Lemma uniq_desc_l {A : eqType} {B : Type} : forall h (a : ABtree A B) l,  
+  ABuniq (ABNode h (a :: l)) -> ABuniq  a.
 Proof.
 move => h a l /= Hu.
 destruct (andP Hu) as [H0 H1]. by destruct (andP H1).
 Qed.
 
-Lemma uniq_desc_r {A B : eqType} : forall h (a : ABtree A B) l,  ABuniq (ABNode h (a :: l)) -> ABuniq (ABNode h l).
+Lemma uniq_desc_r {A : eqType} {B : Type} : 
+  forall h (a : ABtree A B) l,  ABuniq (ABNode h (a :: l)) -> ABuniq (ABNode h l).
 Proof.
 move => h a l /= Hu.
 destruct (andP Hu) as [H0 H1]. apply/andP. split.
@@ -709,8 +710,8 @@ destruct (andP Hu) as [H0 H1]. apply/andP. split.
 - by destruct (andP H1).
 Qed.
 
-Lemma uniq_desc {A B : eqType} : forall h (a : ABtree A B) l,  ABuniq (ABNode h l) ->
-                                  a \in l -> ABuniq a.
+Lemma uniq_desc {A B : eqType} : 
+  forall h (a : ABtree A B) l,  ABuniq (ABNode h l) -> a \in l -> ABuniq a.
 Proof.
 induction l.
 - move => Hu Habs. inversion Habs.
@@ -783,11 +784,11 @@ Fixpoint ABbranches {A B : Type} (t : @ABtree A B) : seq (seq A) := match t with
   | ABLeaf _ => [:: [::]]
   | ABNode a l => [:: [:: a]] ++ map (cons a) (flatten (map ABbranches l)) end.
 
-Lemma sub_branches_head {A B : eqType} : forall (s : seq A) (h : A) (l : seq (ABtree A B)),
-all_prop (fun x : seq_predType A => {subset x <= s}) (ABbranches (ABNode h l)) -> h \in s.
+Lemma sub_branches_head {A : finType} {B : eqType} : forall (s : {set A}) (h : A) (l : seq (ABtree A B)),
+all (fun x : seq_predType A => x \subset s) (ABbranches (ABNode h l)) -> h \in s.
 Proof.
-simpl. move=>s h l [H1 H2].
-apply/H1. by rewrite mem_seq1.
+simpl. move=>s h l /andP [H1 H2].
+apply/(subsetP H1). by rewrite mem_seq1.
 Qed.
 
 Lemma ABnotin_branches {A B : eqType} : forall (a : ABtree A B) h, 
@@ -807,32 +808,41 @@ move=> /andP [Hh Hbr] /=;split.
 Qed.
 
 (** If all the branches [t] are subsequences of [s], the height of [t]
-   is smaller than the size of [s] *)
-Lemma uniq_ab_size {A B : eqType} (t : @ABtree A B) (s : seq A) :
-  ABuniq t -> (all_prop (fun x => {subset x <= s}) (ABbranches t)) -> ABheight t <= size s.
+   is smaller than the cardinal of [s] *)
+(* We work on a set rather than the type directly to be able to reason
+   about the "unused element" (here h) in the recursive case *)
+Lemma uniq_ab_size {A : finType} {B : eqType} (t : @ABtree A B) (s : {set A}) :
+  ABuniq t -> all (fun x => x \subset s) (ABbranches t) -> ABheight t <= #|s|.
 Proof.
 move:s.
 induction t using tst_uniq_ind_prop;auto.
-move => /= s Hu [Hh Hl]. 
-pose s' := rem h s.
+move => /= s Hu /andP [Hh Hl]. 
+pose s' := s :\ h.
 assert (HhIns : h \in s).
-- apply/sub_branches_head;split;[apply Hh| apply Hl].  
+- apply/sub_branches_head/andP;split;[apply Hh| apply Hl].  
 apply fold_maxn_n_map_ltn.
-- by destruct s.
+- rewrite card_gt0. apply/set0Pn. by exists h.
 - apply (all_prop_prop_decr H).
   move=>x Hxin Hp.
-  assert (Hsize : size s = (size s').+1).
-  + unfold s'. apply (seq_in_rem_size HhIns).
+  assert (Hsize : #|s| = #|s'|.+1).
+  + unfold s'. by rewrite (@cardsD1 _ h s) HhIns.
   destruct (andP Hu) as [Hu1 Hu2].
   rewrite Hsize. apply Hp.
-  apply (allP Hu2 _ Hxin).
-  apply sub_rem_seq. 
-  + apply (all_prop_seq_decr Hl).
-    move=>y /mapP [z Hz ->].
-    apply/mapP. exists z. apply/flattenP.
-    exists (ABbranches x). apply/mapP.
-    by exists x. apply Hz. reflexivity.
-  + apply (ABnotin_branches (allP Hu1 _ Hxin)).
+  apply (allP Hu2 _ Hxin).  
+  unfold s'.
+  apply/allP=>y Hy.
+  assert (Hsy : h :: y \in [seq h :: i | i <- flatten [seq ABbranches i | i <- l]]).
+  + apply/mapP. exists y. apply/flattenP.
+    exists (ABbranches x). apply/mapP. by exists x.
+    apply Hy. reflexivity.
+  (* rewrite subsetD1 somehow fails *)
+  apply/subsetP=>z Hz.
+  rewrite in_setD1. apply/andP;split.
+  + destruct (bool_des_rew (z == h)) as [Hzh|Hzh].
+    - have Hf := (all_prop_in (ABnotin_branches (allP Hu1 _ Hxin)) Hy).
+      rewrite -(eqP Hzh) Hz in Hf. inversion Hf. 
+    - unfold negb. by rewrite Hzh. have Hhx := (allP Hu1 x Hxin).
+  + apply/(subsetP (allP Hl _ Hsy))/mem_body/Hz.
 Qed.
 
 Equations h_to_ab_tree {A B : Type} {w h : nat} (t : @Htree w A B h) : @ABtree A B by wf h :=
@@ -925,10 +935,11 @@ Section WUtree.
 
 (** WU constrains an ABtree t to have a bounded width and unique leaves on branch. The uniqueness constraint puts a bound on the height if A finite
 and in that case makes ABtree similar to Htrees. *)
-Definition wu_pred {A B : eqType} {w : nat} (t : @ABtree A B) := ((ABuniq t) && (ABwidth t <= w)).
+Definition wu_pred {A : eqType} {B : Type} {w : nat} (t : @ABtree A B) := 
+  ((ABuniq t) && (ABwidth t <= w)).
 
 (** If A tree fullfills [wu_pred] so do its children *)
-Lemma wu_pred_descs {A B : eqType} {w : nat} (h : A) (l : seq (@ABtree A B)) :
+Lemma wu_pred_descs {A : eqType} {B : Type} {w : nat} (h : A) (l : seq (@ABtree A B)) :
   @wu_pred A B w (ABNode h l) -> all (@wu_pred A B w) l.
 Proof.
 induction l.
@@ -965,7 +976,7 @@ apply/andP ; split.
 - apply (@ABwidth_map A B C D w f g t Hw).
 Qed.
 
-Definition wu_merge {A B : eqType} {w : nat} {t : @ABtree A B} (Hu : ABuniq t) (Hw : ABwidth t <= w) :
+Definition wu_merge {A : eqType} {B : Type} {w : nat} {t : @ABtree A B} (Hu : ABuniq t) (Hw : ABwidth t <= w) :
   (@wu_pred A B w t).
 Proof.
 by apply/andP ; split.
@@ -973,7 +984,8 @@ Qed.
 
 (** We define WUtree as a structure made of an ABtree respecting the [wu_pred]
    condition *)
-Structure WUtree {A B : eqType} (w : nat) := Wht {wht :> @ABtree_eqType A B ; Hwht : @wu_pred A B w wht}.
+Structure WUtree {A : eqType} {B : Type} (w : nat) := 
+  Wht {wht :> @ABtree A B ; Hwht : @wu_pred A B w wht}.
 
 (** WUtree is an eqType *)
 Canonical WUtree_subType {A B : eqType} {w : nat} := Eval hnf in [subType for (@wht A B w)].
@@ -982,31 +994,16 @@ Canonical WUtree_eqType {A B : eqType} {w : nat} := Eval hnf in EqType (@WUtree 
 (** ** WUtree is an finite Type *)
 Section WUtree_finType.
 
-(** If A is a finite type, any sequence of A is a subsequence of the enumeration of A*)
-Lemma subset_enum {A : finType} : forall (l : seq A), {subset l <= enum A}.
+(** Core lemma: the height of a WUtree (in fact of an ABtree 
+    respecting uniqueness) is bound by the cardinal of A.    *)
+Lemma height_WUtree {A B : finType} {w : nat} (t : @WUtree A B w) : 
+  ABheight (wht t) < #|A|.+1.
 Proof.
-by move => l x Hxl ; rewrite mem_enum.
-Qed.
-
-(** Lifted to sequence of sequences *)
-Lemma subsubset_enum {A : finType} : forall (l : seq (seq A)),
-all_prop (fun x => {subset x <= enum A}) l.
-Proof.
-induction l.
-- move => //.
-- split.
-  + apply subset_enum.
-  + apply IHl.
-Qed.
-
-(** Core lemma: the height of a WUtree (in fact of an ABtree respecting uniqueness) is bound by the cardinal of A. *)
-Lemma height_WUtree {A B : finType} {w : nat} (t : @WUtree A B w) : ABheight (wht t) < #|A|.+1.
-Proof.
-rewrite ltnS ; rewrite [card]unlock.
-destruct t as [t Hwut].
-apply uniq_ab_size.
-- apply(bool_to_prop_l Hwut).
-- apply subsubset_enum.
+rewrite ltnS.
+destruct t as [t Hwut]. simpl.
+rewrite -cardsE.
+apply (@uniq_ab_size A B t [set x in A] (bool_to_prop_l Hwut)).
+apply/allP=>x Hx. apply/subsetP=>y Hy. by rewrite in_set.
 Qed.
 
 (** Translation from an HTree respecting [Huniq] to a WUTree *)

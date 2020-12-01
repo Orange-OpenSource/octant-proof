@@ -6,14 +6,13 @@
 (**                                                                                 *)
 (**                        Copyright 2016-2019 : FormalData                         *)
 (**                                                                                 *)
-(**         Authors: Véronique Benzaken                                             *)
-(**                  Évelyne Contejean                                              *)
-(**                  Stefania Dumbrava                                              *)
+(**         Original authors: Véronique Benzaken                                    *)
+(**                           Évelyne Contejean                                     *)
+(**                           Stefania Dumbrava                                     *)
 (**                                                                                 *)
 (************************************************************************************)
 
-(** This is the sixth part of the original file "pengine.v" with modifications
-    by Pierre-Léo Bégay. *)
+(** This is the sixth part of the original file "pengine.v" with modifications *)
 
 Require Import syntax.
 Require Import subs.
@@ -192,6 +191,13 @@ Implicit Types (ss : {set sub}).
   [i] *)
 
 Definition match_pbody tl i ss0 := foldS (match_atom_all i) ss0 tl.
+
+(** [match_pbody] increasing for set sub argument *)
+Lemma match_pbody_incr i tl ss1 ss2 :
+  ss1 \subset ss2 -> match_pbody tl i ss1 \subset match_pbody tl i ss2.
+Proof.
+by move=> H; apply/foldS_incr => //; move=> u s'; apply: match_atom_all_incr.
+Qed.
 
 (** Reflection view on the inductive theorem associated with [match_pbody] *)
 Lemma match_pbody_cons a l i r ss0 :
@@ -397,6 +403,83 @@ Qed.
 (* TODO: BEGIN TO MOVE *)
 (** ** Lemmas on substitutions -- added *)
 
+(** Matching between inconsistent atom and gatom fail *)
+Lemma match_atom_dif_lengths (a : atom) (ga : gatom) (s : sub) :
+  size (arg_atom a) != size (arg_gatom ga) -> match_atom s a ga = None.
+Proof.
+move=>H. unfold match_atom. unfold match_raw_atom.
+destruct a as [[g args] Ha];destruct ga as [[gg gargs] Hga];simpl.
+destruct (bool_des_rew (size args == size gargs)) as [Hs|Hs].
+simpl in H. rewrite (eqP Hs) eq_refl in H. inversion H.
+by rewrite Hs Bool.andb_false_r.
+Qed.
+Lemma match_atom_diff_cons (a : atom) (ga : gatom) (s : sub) (j : nat) (c d : syntax.constant) :
+   nth_error (arg_atom a) j = Some (Val c) -> nth_error (arg_gatom ga) j = Some d 
+-> d != c -> match_atom s a ga = None.
+Proof.
+destruct a  as [[g  args]  Ha];
+destruct ga as [[gg gargs] Hga];
+unfold match_atom; unfold match_raw_atom;simpl.
+clear Ha; clear Hga.
+move:gargs j s.
+induction args as [|hargs tlargs Hrec];
+move=>[|hgargs tlgargs] [|j] s //=.
+- move=>[->] [->] Hdc.
+  simpl. destruct (bool_des_rew (d == c)) as [Hdcb|Hdcb].
+  rewrite Hdcb in Hdc. inversion Hdc.
+  by rewrite Hdcb foldObindNone ite_id.
+- move=>H1 H2 Hdc.
+  rewrite eqSS.
+  destruct hargs as [v|e];simpl.
+  destruct (sub_elim s v) as [[a Ha]|Hnone].
+  rewrite Ha. 
+  destruct (bool_des_rew (hgargs == a)) as [Hha|Hha];
+  rewrite Hha.
+  apply (Hrec tlgargs j _ H1 H2 Hdc).
+  by rewrite foldObindNone ite_id.
+  rewrite Hnone. apply (Hrec tlgargs j _ H1 H2 Hdc).
+  destruct (bool_des_rew (hgargs == e)) as [Hha|Hha];
+  rewrite Hha.
+  apply (Hrec tlgargs j _ H1 H2 Hdc).
+  by rewrite foldObindNone ite_id.
+Qed.
+
+Lemma match_atom_diff_heads (s : sub) (a : atom) (ga : gatom) :
+  (sym_atom a != sym_gatom ga) -> match_atom s a ga = None.
+Proof.
+move=>H.
+unfold match_atom.
+unfold match_raw_atom.
+destruct a as [[g args] Ha];
+destruct ga as [[gg gargs] Hga].
+simpl. simpl in H.
+destruct (bool_des_rew (g == gg)) as [Hg|Hg];rewrite Hg.
+rewrite Hg in H. inversion H.
+by rewrite Bool.andb_false_l.
+Qed.
+
+Lemma arg_c_match j (a : atom) (ga : gatom) s c : 
+  nth_error (arg_atom a) j = Some (Val c) -> 
+   (nth_error (arg_gatom ga) j = Some c 
+\/ ((nth_error (arg_gatom ga) j = None 
+  \/ exists d, d != c /\ nth_error (arg_gatom ga) j = Some d) /\ match_atom s a ga = None)).
+Proof.
+move=>Hnth.
+destruct (nth_error_case (arg_gatom ga) j) as [Hnone|[d [Hdin Hd]]].
+- right. split. left. apply Hnone.
+  apply match_atom_dif_lengths.
+  destruct (bool_des_rew ((size (arg_atom a)) == (size (arg_gatom ga)))) as [Hs|Hs].
+  exfalso. apply (nth_error_some_none_size Hnth Hnone). apply/eqP/Hs.
+  by rewrite Hs.
+- destruct (bool_des_rew (d == c)) as [Hdc|Hdc].
+  + left. rewrite -(eqP Hdc). apply Hd.
+  + right. split.
+    - right. exists d. split.
+      by rewrite Hdc.
+      apply Hd.
+    - apply (match_atom_diff_cons s Hnth Hd). by rewrite Hdc.
+Qed.
+
 (** If s is the result of matching [a] on [ga] starting with [r]
    and [v] a variable of [s] domain, then either [v] was in
    the domain of [r] or [v] was a variable of [a] *)
@@ -558,6 +641,17 @@ Lemma match_vars_subset s tl i : s \in match_body i tl
                 -> tail_vars tl \subset dom s.
 Proof.
 rewrite (match_body_pbody _ _ s) ; apply pmatch_vars_subset.
+Qed.
+
+(** If [s] in the matching of body [tl] against [i],
+  then the variables of the body [tl] are the domain of [s] *)
+Lemma match_vars_seteq s tl i : s \in match_body i tl
+                -> tail_vars tl = dom s.
+Proof.
+move=>H.
+apply/eqP;rewrite eqEsubset;apply/andP;split;apply/subsetP;move=>x Hx.
+apply/(subsetP (match_vars_subset H))/Hx.
+apply/(subsetP (match_subset_vars H))/Hx.
 Qed.
 
 (** Let [i] be a safe interpretation, [p] a safe program.
@@ -988,14 +1082,6 @@ elim: k i h_tr => [|ns ihns] ci hstb //=.
 by rewrite ihns // fwd_chain_stable.
 Qed.
 
-(** The iteration of [fwd_chain pp] on [i] contains [i]*)
-Lemma iter_fwd_chain_subset def pp i k :
-  i \subset iter k (fwd_chain def pp) i.
-Proof.
-elim: k => //= k ihk; rewrite (subset_trans (fwd_chain_inc i pp def)) //.
-exact: fwd_chain_incr.
-Qed.
-
 (** ** Auxiliary lemmas - Added *)
 (** If we start from [sp] augmented with [x -> y], then after folding [match_term]
   on [l1] and [l2] (terms and ground terms), if we succeed, [s] the result
@@ -1247,8 +1333,8 @@ move:cl Hseq.
 destruct cl as [hcl tlcl]. simpl.
 apply (@wlist_ind atom_finType bn
 (fun tltl => stail tltl s = [seq to_atom ga | ga <- gtl] ->
-all (mem i) (wmap (gr_atom (to_gr def s)) tltl))).
-move => l Pl. unfold wlist_to_seq_co. rewrite wmapK !seq_wlist_uncut_K.
+all (mem i) (gr_tl (to_gr def s) tltl))).
+move => l Pl. unfold wlist_to_seq_co. rewrite !seq_wlist_uncut_K.
 clear Pl.
 
 move:l.
@@ -1276,8 +1362,12 @@ assert (H1 : emptysub \in [set emptysub]).
 by apply/set1P. unfold bmatch.
 destruct (bool_des_rew (cl_vars cl \subset dom s)) as [H2|H2];
 rewrite H2;
-move=>H3.
-destruct (match_ptl_complete H1 (subst0s (to_sub (to_gr def s))) H3)
+move=>H3. 
+assert (H3b : all (mem i) (body_gcl (gr_cl (to_gr def s) cl))).
+apply/allP=>x Hx. apply (allP H3).
+unfold body_gcl in Hx. simpl in Hx. unfold wlist_to_seq_co in Hx. 
+rewrite wmapK in Hx. apply Hx.
+destruct (match_ptl_complete H1 (subst0s (to_sub (to_gr def s))) H3b)
   as [r Hr].
 exists r. apply Hr.
 assert (Hdom : dom r \subset dom s).

@@ -6,14 +6,13 @@
 (**                                                                                 *)
 (**                        Copyright 2016-2019 : FormalData                         *)
 (**                                                                                 *)
-(**         Authors: Véronique Benzaken                                             *)
-(**                  Évelyne Contejean                                              *)
-(**                  Stefania Dumbrava                                              *)
+(**         Original authors: Véronique Benzaken                                    *)
+(**                           Évelyne Contejean                                     *)
+(**                           Stefania Dumbrava                                     *)
 (**                                                                                 *)
 (************************************************************************************)
 
-(** This is the fourth part of the original file "pengine.v" with a new part added
-    by Pierre-Léo Bégay *)
+(** Fourth part of the original file "pengine.v" with an additional new part *)
 
 Require Import syntax.
 Require Import subs.
@@ -60,15 +59,6 @@ Definition fwd_chain def p i : {set gatom} :=
 (** [sem p d m i] iterates fwd_chain m times over i. Added to the original files *)
 Definition sem (p : program) (def : syntax.constant) (m : nat) (i : interp) :=
   iter m (fwd_chain def p) i.
-
-(** [sem] is increasing for subset *)
-Lemma sem_m_incr (p : program) (def : syntax.constant) (m : nat) (i : interp) :
-  sem p def m i \subset sem p def m.+1 i.
-Proof.
-induction m as [|m Hm];apply/subsetP=>x.
-move=>/= Hxin. apply/setUP. by left.
-move=>Hxin. apply/setUP. by left.
-Qed.
 
 (** If [p] has safe heads, 
    [sem] is safe (only defines elements in the IDB or it was in i_init *)

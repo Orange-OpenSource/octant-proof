@@ -1,7 +1,1 @@
 COQDOCEXTRAFLAGS=--no-lib-name --external https://math-comp.github.io/htmldoc/ mathcomp
-
-publish: gallinahtml
-	mkdir -p docs
-	cp html/*.html html/*.css docs
-	mv docs/index.html docs/global_index.html
-	cp index.html docs
