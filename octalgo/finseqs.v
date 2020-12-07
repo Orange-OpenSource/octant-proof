@@ -1,9 +1,8 @@
 (**************************************************************************)
-(**                                                                       *)
-(**  This file is part of octant-proof.                                   *)
-(**                                                                       *)
-(**  Copyright (C) 2019-2020 Orange                                       *)
-(**  License: LGPL-3.0-or-later                                           *)
+(*                                                                        *)
+(*  This file is part of octant-proof.                                    *)
+(*                                                                        *)
+(*  Copyright (C) 2019-2020 Orange                                        *)
 (*                                                                        *)
 (*  you can redistribute it and/or modify it under the terms of the GNU   *)
 (*  Lesser General Public License as published by the Free Software       *)
@@ -49,10 +48,23 @@ Canonical uniq_seq_choiceType {A : choiceType} := Eval hnf in ChoiceType _ [choi
 Canonical uniq_seq_countType {A : countType} := Eval hnf in CountType _ [countMixin of (@uniq_seq A) by <:].
 Canonical uniq_seq_subCountType {A : countType} := Eval hnf in [subCountType of (@uniq_seq A)].
 
+Lemma notinnil {A : eqType} (x : A) : x \notin [::].
+Proof.
+auto.
+Qed.
+
 (** ** constructors for uniq_seq *)
 Definition unil {A : eqType} : @uniq_seq A  := {| useq := [::]; buniq := is_true_true |}.
+Definition ucons1 {A : eqType} (t : A) :=
+  {| useq := [:: t]; buniq := notinnil t |}.
 Definition ucons {A : eqType} (t : A) (b : uniq_seq) (H : t \notin (useq b)) : uniq_seq :=
 {| useq := t :: b; buniq := (andP_to_uniq (conj H (buniq b))) |}.
+(* tries to add t to b *)
+Definition pucons {A : eqType} (t : A) (b : @uniq_seq A) : @uniq_seq A :=
+ match Sumbool.sumbool_of_bool (t \notin (useq b)) with
+    | left H => ucons H
+    | in_right => b
+  end.
 
 Lemma uniq_behead {A : eqType} (s : seq A) : uniq s -> uniq (behead s).
 Proof.

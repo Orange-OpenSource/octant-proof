@@ -22,11 +22,10 @@
 </div>
 
 <div class="doc">
-                                                                                                             The DatalogCert Library                                                                                                                           CNRS &amp; Université Paris-Sud, Université Paris-Saclay                                                                                                                         Copyright 2016-2019 : FormalData                                                                                                                   Authors: Véronique Benzaken                                                               Évelyne Contejean                                                                Stefania Dumbrava                                                                                                                               
+                                                                                                             The DatalogCert Library                                                                                                                           CNRS &amp; Université Paris-Sud, Université Paris-Saclay                                                                                                                         Copyright 2016-2019 : FormalData                                                                                                                   Original authors: Véronique Benzaken                                                               Évelyne Contejean                                                                Stefania Dumbrava                                                                                                                      
 <div class="paragraph"> </div>
 
- This is the second part of the original file "pengine.v" with some modifications
-    by Pierre-Léo Bégay 
+ Second part of the original file "pengine.v" with some modifications 
 </div>
 <div class="code">
 
@@ -50,8 +49,8 @@
 </div>
 
 <div class="doc">
-<a name="lab76"></a><h1 class="section">Substitutions</h1>
-<a name="lab77"></a><h2 class="section">Substitutions as finitely supported partial functions</h2>
+<a name="lab78"></a><h1 class="section">Substitutions</h1>
+<a name="lab79"></a><h2 class="section">Substitutions as finitely supported partial functions</h2>
 
 </div>
 <div class="code">
@@ -149,7 +148,7 @@ mem_binding = \in to be used as generic predicate
 </div>
 
 <div class="doc">
-<a name="lab78"></a><h2 class="section">Order on substitutions</h2>
+<a name="lab80"></a><h2 class="section">Order on substitutions</h2>
  substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s2"><span class="id" title="variable">s2</span></a></span> extends <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s1"><span class="id" title="variable">s1</span></a></span> 
 </div>
 <div class="code">
@@ -175,7 +174,7 @@ reflection lemma for substitution ordering
 </div>
 
 <div class="doc">
-<a name="lab79"></a><h3 class="section">Substitution Extensionality Lemma</h3>
+<a name="lab81"></a><h3 class="section">Substitution Extensionality Lemma</h3>
 
 </div>
 <div class="code">
@@ -213,8 +212,8 @@ any substitution extends the empty substitution
 </div>
 
 <div class="doc">
-<a name="lab80"></a><h2 class="section">Adding an elementary binding</h2>
- Extending a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> with a binding <span class="inlinecode">(<a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a>,<a class="idref" href="octalgo.octalgo.finseqs.html#d"><span class="id" title="variable">d</span></a>)</span> 
+<a name="lab82"></a><h2 class="section">Adding an elementary binding</h2>
+ Extending a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> with a binding <span class="inlinecode">(<a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a>,<a class="idref" href="octalgo.octalgo.finseqs.html#d"><span class="id" title="variable">d</span></a>)</span> 
 </div>
 <div class="code">
 <span class="id" title="keyword">Definition</span> <a name="add"><span class="id" title="definition">add</span></a> <span class="id" title="var">s</span> <span class="id" title="var">v</span> <span class="id" title="var">d</span> :=<br/>
@@ -224,7 +223,7 @@ any substitution extends the empty substitution
 </div>
 
 <div class="doc">
-If <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> was free in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, substitution extension respects ordering. 
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> was free in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, substitution extension respects ordering. 
 </div>
 <div class="code">
 <span class="id" title="keyword">Lemma</span> <a name="sub_add"><span class="id" title="lemma">sub_add</span></a> <span class="id" title="var">s</span> <span class="id" title="var">v</span> <span class="id" title="var">d</span> : <a class="idref" href="octalgo.datalogcert.subs.html#mem_free"><span class="id" title="definition">mem_free</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#b83f30caa7a1ede5ec6c0901e37586c0"><span class="id" title="notation">\</span></a><a class="idref" href="octalgo.datalogcert.subs.html#b83f30caa7a1ede5ec6c0901e37586c0"><span class="id" title="notation">sub</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#b83f30caa7a1ede5ec6c0901e37586c0"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.datalogcert.subs.html#add"><span class="id" title="definition">add</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#d"><span class="id" title="variable">d</span></a><a class="idref" href="octalgo.datalogcert.subs.html#b83f30caa7a1ede5ec6c0901e37586c0"><span class="id" title="notation">)</span></a>.<br/>
@@ -275,7 +274,7 @@ If binding are on different variables we can permute the
 </div>
 
 <div class="doc">
-<a name="lab81"></a><h2 class="section">Substitution on terms</h2>
+<a name="lab83"></a><h2 class="section">Substitution on terms</h2>
  Term substitution 
 </div>
 <div class="code">
@@ -312,7 +311,7 @@ Substitution extension for terms
 </div>
 
 <div class="doc">
-<a name="lab82"></a><h2 class="section">Substitution on atoms</h2>
+<a name="lab84"></a><h2 class="section">Substitution on atoms</h2>
  Atom substitution: applying a substiution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> to a "raw" atom <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ra"><span class="id" title="variable">ra</span></a></span> 
 </div>
 <div class="code">
@@ -360,7 +359,7 @@ The ground atom that is the result of applying s to a if any
 </div>
 
 <div class="doc">
-<a name="lab83"></a><h3 class="section">Atom Substitution Extensions Lemma:</h3>
+<a name="lab85"></a><h3 class="section">Atom Substitution Extensions Lemma:</h3>
 
 Let <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s1"><span class="id" title="variable">s1</span></a></span>, <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s2"><span class="id" title="variable">s2</span></a></span> be two substitutions. If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s2"><span class="id" title="variable">s2</span></a></span> extends <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s1"><span class="id" title="variable">s1</span></a></span> and <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s1"><span class="id" title="variable">s1</span></a></span> instantiates
 an atom <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> to a ground atom <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span>, then <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s2"><span class="id" title="variable">s2</span></a></span> also instantitates <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> to <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span>. 
@@ -442,7 +441,7 @@ Same as above but generalized to a list of atoms (body of clause)
 </div>
 
 <div class="doc">
-<a name="lab84"></a><h2 class="section">Substitution on clauses</h2>
+<a name="lab86"></a><h2 class="section">Substitution on clauses</h2>
 
 </div>
 <div class="code">
@@ -470,7 +469,7 @@ Export the notation
 </div>
 
 <div class="doc">
-<a name="lab85"></a><h2 class="section">Non dependent grounding using default element</h2>
+<a name="lab87"></a><h2 class="section">Non dependent grounding using default element</h2>
 
 </div>
 <div class="code">
@@ -493,7 +492,7 @@ default element
 </div>
 
 <div class="doc">
-grounding a term <span class="inlinecode"><a class="idref" href="octalgo.third_party.bigop_aux.html#t"><span class="id" title="variable">t</span></a></span> with a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.def"><span class="id" title="variable">def</span></a></span> 
+grounding a term <span class="inlinecode"><a class="idref" href="octalgo.third_party.bigop_aux.html#t"><span class="id" title="variable">t</span></a></span> with a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.def"><span class="id" title="variable">def</span></a></span> 
 </div>
 <div class="code">
 <span class="id" title="keyword">Definition</span> <a name="gr_term_def"><span class="id" title="definition">gr_term_def</span></a> <span class="id" title="var">s</span> <span class="id" title="var">t</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a> :=<br/>
@@ -517,7 +516,7 @@ We can use the above def, or first apply the definition and then
 
 <div class="doc">
 If, when instantiating a term <span class="inlinecode"><a class="idref" href="octalgo.third_party.bigop_aux.html#t"><span class="id" title="variable">t</span></a></span> with a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, we obtain a constant <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#c"><span class="id" title="variable">c</span></a></span>,
-then we obtain <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#c"><span class="id" title="variable">c</span></a></span> also when grounding <span class="inlinecode"><a class="idref" href="octalgo.third_party.bigop_aux.html#t"><span class="id" title="variable">t</span></a></span> with <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> using the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.def"><span class="id" title="variable">def</span></a></span>. 
+then we obtain <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#c"><span class="id" title="variable">c</span></a></span> also when grounding <span class="inlinecode"><a class="idref" href="octalgo.third_party.bigop_aux.html#t"><span class="id" title="variable">t</span></a></span> with <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> using the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.def"><span class="id" title="variable">def</span></a></span>. 
 </div>
 <div class="code">
 <span class="id" title="keyword">Lemma</span> <a name="gr_term_defP"><span class="id" title="lemma">gr_term_defP</span></a> <span class="id" title="var">c</span> <span class="id" title="var">t</span> <span class="id" title="var">s</span> :<br/>
@@ -538,8 +537,8 @@ If t1 has less variables than t2 (reminder at most one), then
 </div>
 
 <div class="doc">
-<a name="lab86"></a><h3 class="section">Non dependent grounding on raw atoms</h3>
- grounding a raw atom <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ra"><span class="id" title="variable">ra</span></a></span> with a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.def"><span class="id" title="variable">def</span></a></span> 
+<a name="lab88"></a><h3 class="section">Non dependent grounding on raw atoms</h3>
+ grounding a raw atom <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ra"><span class="id" title="variable">ra</span></a></span> with a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.def"><span class="id" title="variable">def</span></a></span> 
 </div>
 <div class="code">
 <span class="id" title="keyword">Definition</span> <a name="gr_raw_atom_def"><span class="id" title="definition">gr_raw_atom_def</span></a> <span class="id" title="var">s</span> <span class="id" title="var">ra</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#raw_gatom"><span class="id" title="inductive">raw_gatom</span></a> :=<br/>
@@ -563,7 +562,7 @@ Let s1 and s2 be two substitutions. For each variable v,
 </div>
 
 <div class="doc">
-<a name="lab87"></a><h3 class="section">Non dependent grounding on atoms</h3>
+<a name="lab89"></a><h3 class="section">Non dependent grounding on atoms</h3>
  well-formedness is preserved by non-dependent grounding 
 </div>
 <div class="code">
@@ -583,7 +582,7 @@ grounding an atom <span class="inlinecode"><a class="idref" href="octalgo.octalg
 
 <div class="doc">
 Let <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> be an atom and <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> a substitution. If, when instantiating <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> with <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, we obtain
-the ground atom <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span>, then, when grounding <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> with <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.def"><span class="id" title="variable">def</span></a></span>, we also
+the ground atom <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span>, then, when grounding <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> with <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and the default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.def"><span class="id" title="variable">def</span></a></span>, we also
 obtain <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span>. 
 </div>
 <div class="code">
@@ -595,7 +594,7 @@ obtain <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.synta
 
 <div class="doc">
 Let <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span> be a ground atom. If we lift it to an atom and ground it with a substitution
-<span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and a default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.def"><span class="id" title="variable">def</span></a></span>, <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span> is preserved. 
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> and a default element <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.def"><span class="id" title="variable">def</span></a></span>, <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#ga"><span class="id" title="variable">ga</span></a></span> is preserved. 
 </div>
 <div class="code">
 <span class="id" title="keyword">Lemma</span> <a name="gr_atom_defK"><span class="id" title="lemma">gr_atom_defK</span></a> <span class="id" title="var">ga</span> <span class="id" title="var">s</span> : <a class="idref" href="octalgo.datalogcert.subs.html#gr_atom_def"><span class="id" title="definition">gr_atom_def</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s"><span class="id" title="variable">s</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#to_atom"><span class="id" title="definition">to_atom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#ga"><span class="id" title="variable">ga</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#ga"><span class="id" title="variable">ga</span></a>.<br/>
@@ -604,7 +603,7 @@ Let <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.h
 </div>
 
 <div class="doc">
-<a name="lab88"></a><h3 class="section">Non dependent grounding on clauses</h3>
+<a name="lab90"></a><h3 class="section">Non dependent grounding on clauses</h3>
 
 </div>
 <div class="code">
@@ -615,7 +614,7 @@ Let <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.h
 </div>
 
 <div class="doc">
-<a name="lab89"></a><h3 class="section">From substitution to grounding</h3>
+<a name="lab91"></a><h3 class="section">From substitution to grounding</h3>
  Using default value to lift a subst to a grounding 
 </div>
 <div class="code">
@@ -653,7 +652,7 @@ If s is defined on t, applying it on t gives as applying its
 </div>
 
 <div class="doc">
-<a name="lab90"></a><h2 class="section">Domain of a substitution - modified</h2>
+<a name="lab92"></a><h2 class="section">Domain of a substitution - modified</h2>
  substitution domain: set of all variables it binds (moved) 
 </div>
 <div class="code">
@@ -672,7 +671,32 @@ The domain of the empty subsitution is the empty set
 </div>
 
 <div class="doc">
-If <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> in the domain of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> cannot be in the result of applying <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>
+domain of a "singleton sub" is the relevant variable - added 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="dom_singlesub"><span class="id" title="lemma">dom_singlesub</span></a> <span class="id" title="var">v</span> <span class="id" title="var">c</span> : <a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> (<a class="idref" href="octalgo.datalogcert.subs.html#add"><span class="id" title="definition">add</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#emptysub"><span class="id" title="definition">emptysub</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#f5e197738ea7c8e266850f6045418c3f"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#f5e197738ea7c8e266850f6045418c3f"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#f5e197738ea7c8e266850f6045418c3f"><span class="id" title="notation">]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+equality of a "singleton sub" - added 
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <a name="eq_singlesub"><span class="id" title="lemma">eq_singlesub</span></a> <span class="id" title="var">s</span> <span class="id" title="var">v</span> <span class="id" title="var">c</span> : <br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#f5e197738ea7c8e266850f6045418c3f"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#f5e197738ea7c8e266850f6045418c3f"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#f5e197738ea7c8e266850f6045418c3f"><span class="id" title="notation">]</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#c"><span class="id" title="variable">c</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#add"><span class="id" title="definition">add</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#emptysub"><span class="id" title="definition">emptysub</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#c"><span class="id" title="variable">c</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="sub_dom"><span class="id" title="lemma">sub_dom</span></a> (<span class="id" title="var">s1</span> <span class="id" title="var">s2</span> : <a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a>) : <br/>
+&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#720926d502a5306a0af0f43d9c795cff"><span class="id" title="notation">\</span></a><a class="idref" href="octalgo.datalogcert.subs.html#720926d502a5306a0af0f43d9c795cff"><span class="id" title="notation">sub</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> in the domain of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> cannot be in the result of applying <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>
    to an atom <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> 
 </div>
 <div class="code">
@@ -683,7 +707,7 @@ If <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.ht
 </div>
 
 <div class="doc">
-If <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> in the domain of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> cannot be in the result of applying <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> in the domain of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>, <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> cannot be in the result of applying <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span>
    to a list of atoms <span class="inlinecode"><a class="idref" href="octalgo.third_party.bigop_aux.html#l"><span class="id" title="variable">l</span></a></span>. 
 </div>
 <div class="code">
@@ -757,7 +781,7 @@ The domain of the set of substitution reduced to the empty substitution is empty
 </div>
 
 <div class="doc">
-<a name="lab91"></a><h2 class="section">Restriction of a substitution to a set of variables (Added)</h2>
+<a name="lab93"></a><h2 class="section">Restriction of a substitution to a set of variables (Added)</h2>
 
 </div>
 <div class="code">
@@ -820,8 +844,8 @@ Restricting the empty sub does not change it.
 </div>
 
 <div class="doc">
-Let <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t1"><span class="id" title="variable">t1</span></a></span> and <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t2"><span class="id" title="variable">t2</span></a></span> disjoint, <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t1"><span class="id" title="variable">t1</span></a></span>, the restriction of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a></span> to <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t2"><span class="id" title="variable">t2</span></a></span>
-is the same as the restriction of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a></span> augmented with a binding for <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> to
+Let <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t1"><span class="id" title="variable">t1</span></a></span> and <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t2"><span class="id" title="variable">t2</span></a></span> disjoint, <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t1"><span class="id" title="variable">t1</span></a></span>, the restriction of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a></span> to <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t2"><span class="id" title="variable">t2</span></a></span>
+is the same as the restriction of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a></span> augmented with a binding for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> to
 <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t2"><span class="id" title="variable">t2</span></a></span> 
 </div>
 <div class="code">
@@ -833,7 +857,7 @@ is the same as the restriction of <span class="inlinecode"><a class="idref" href
 </div>
 
 <div class="doc">
-If <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span> in <span class="inlinecode">ŧ2</span>, the restriction of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a></span> augmented with a binding for <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#v"><span class="id" title="variable">v</span></a></span>
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span> in <span class="inlinecode">ŧ2</span>, the restriction of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a></span> augmented with a binding for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.extract_static.html#Transformation.v"><span class="id" title="variable">v</span></a></span>
   to <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t2"><span class="id" title="variable">t2</span></a></span> is equal to augmenting the restriction of <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a></span> to <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#t2"><span class="id" title="variable">t2</span></a></span> with this
   same binding. 
 </div>
@@ -841,6 +865,25 @@ If <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.ht
 <span class="id" title="keyword">Lemma</span> <a name="add_untyped_untyped"><span class="id" title="lemma">add_untyped_untyped</span></a> <span class="id" title="var">v</span> (<span class="id" title="var">t</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">'</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#545d9d6249a673300f950a2a8b8a930b"><span class="id" title="notation">I_n</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a>) <span class="id" title="var">c</span> <span class="id" title="var">sp</span> :<br/>
 &nbsp;&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#t"><span class="id" title="variable">t</span></a><br/>
 <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#add"><span class="id" title="definition">add</span></a> (<a class="idref" href="octalgo.datalogcert.subs.html#sub_filter"><span class="id" title="definition">sub_filter</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#t"><span class="id" title="variable">t</span></a>) <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#c"><span class="id" title="variable">c</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.datalogcert.subs.html#sub_filter"><span class="id" title="definition">sub_filter</span></a> (<a class="idref" href="octalgo.datalogcert.subs.html#add"><span class="id" title="definition">add</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#sp"><span class="id" title="variable">sp</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="octalgo.datalogcert.subs.html#t"><span class="id" title="variable">t</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="atom_vars_sub_gr"><span class="id" title="lemma">atom_vars_sub_gr</span></a> (<span class="id" title="var">a</span>:<a class="idref" href="octalgo.datalogcert.syntax.html#atom"><span class="id" title="record">atom</span></a>) (<span class="id" title="var">s1</span> <span class="id" title="var">s2</span>:<a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a>) :<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.syntax.html#atom_vars"><span class="id" title="definition">atom_vars</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#720926d502a5306a0af0f43d9c795cff"><span class="id" title="notation">\</span></a><a class="idref" href="octalgo.datalogcert.subs.html#720926d502a5306a0af0f43d9c795cff"><span class="id" title="notation">sub</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gr_atom"><span class="id" title="definition">gr_atom</span></a> (<a class="idref" href="octalgo.datalogcert.subs.html#to_gr"><span class="id" title="definition">to_gr</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a>) <a class="idref" href="octalgo.datalogcert.subs.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gr_atom"><span class="id" title="definition">gr_atom</span></a> (<a class="idref" href="octalgo.datalogcert.subs.html#to_gr"><span class="id" title="definition">to_gr</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a>) <a class="idref" href="octalgo.datalogcert.subs.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="atom_vars_sub_gr_def"><span class="id" title="lemma">atom_vars_sub_gr_def</span></a> (<span class="id" title="var">a</span>:<a class="idref" href="octalgo.datalogcert.syntax.html#atom"><span class="id" title="record">atom</span></a>) (<span class="id" title="var">s1</span> <span class="id" title="var">s2</span>:<a class="idref" href="octalgo.datalogcert.subs.html#sub"><span class="id" title="definition">sub</span></a>) :<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.syntax.html#atom_vars"><span class="id" title="definition">atom_vars</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#720926d502a5306a0af0f43d9c795cff"><span class="id" title="notation">\</span></a><a class="idref" href="octalgo.datalogcert.subs.html#720926d502a5306a0af0f43d9c795cff"><span class="id" title="notation">sub</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#gr_atom_def"><span class="id" title="definition">gr_atom_def</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#gr_atom_def"><span class="id" title="definition">gr_atom_def</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="gr_term_def_eq_in_dom"><span class="id" title="lemma">gr_term_def_eq_in_dom</span></a> <span class="id" title="var">s1</span> <span class="id" title="var">s2</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> :<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.subs.html#gr_term_def"><span class="id" title="definition">gr_term_def</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#Var"><span class="id" title="constructor">Var</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v1"><span class="id" title="variable">v1</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#gr_term_def"><span class="id" title="definition">gr_term_def</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a> (<a class="idref" href="octalgo.datalogcert.syntax.html#Var"><span class="id" title="constructor">Var</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v2"><span class="id" title="variable">v2</span></a>)<br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v2"><span class="id" title="variable">v2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#dom"><span class="id" title="definition">dom</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a><br/>
+<a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="octalgo.datalogcert.subs.html#v2"><span class="id" title="variable">v2</span></a>.<br/>
 
 <br/>
 <span class="id" title="keyword">End</span> <a class="idref" href="octalgo.datalogcert.subs.html#NoDepGrounding"><span class="id" title="section">NoDepGrounding</span></a>.<br/>

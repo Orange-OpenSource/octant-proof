@@ -19,12 +19,6 @@
 <h1 class="libtitle">octalgo.octalgo.finseqs</h1>
 
 <div class="code">
-</div>
-
-<div class="doc">
-                                                                        This file is part of octant-proof.                                                                                                            Copyright (C) 2019-2020 Orange                                         License: LGPL-3.0-or-later                                           
-</div>
-<div class="code">
 
 <br/>
 
@@ -37,7 +31,7 @@
 </div>
 
 <div class="doc">
-<a name="lab24"></a><h1 class="section">uniq_seq: finite sequences, bounded by unicity</h1>
+<a name="lab26"></a><h1 class="section">uniq_seq: finite sequences, bounded by unicity</h1>
 
 </div>
 <div class="code">
@@ -47,7 +41,7 @@
 </div>
 
 <div class="doc">
-<a name="lab25"></a><h2 class="section">Definition</h2>
+<a name="lab27"></a><h2 class="section">Definition</h2>
 
 </div>
 <div class="code">
@@ -62,7 +56,7 @@
 </div>
 
 <div class="doc">
-<a name="lab26"></a><h2 class="section">uniq_seq is a subtype of seq</h2>
+<a name="lab28"></a><h2 class="section">uniq_seq is a subtype of seq</h2>
 
 </div>
 <div class="code">
@@ -70,7 +64,7 @@
 </div>
 
 <div class="doc">
-<a name="lab27"></a><h2 class="section">as well as eqType, choiceType, countType and subCountType</h2>
+<a name="lab29"></a><h2 class="section">as well as eqType, choiceType, countType and subCountType</h2>
 
 </div>
 <div class="code">
@@ -80,16 +74,26 @@
 <span class="id" title="keyword">Canonical</span> <span class="id" title="var">uniq_seq_subCountType</span> {<span class="id" title="var">A</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.choice.html#Countable.Exports.countType"><span class="id" title="abbreviation">countType</span></a>} := <span class="id" title="keyword">Eval</span> <span class="id" title="tactic">hnf</span> <span class="id" title="tactic">in</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.choice.html#9bbd910cbebcec91f8279b0711b4702d"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.choice.html#9bbd910cbebcec91f8279b0711b4702d"><span class="id" title="notation">subCountType</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.choice.html#9bbd910cbebcec91f8279b0711b4702d"><span class="id" title="notation">of</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.choice.html#9bbd910cbebcec91f8279b0711b4702d"><span class="id" title="notation">(</span></a>@<a class="idref" href="octalgo.octalgo.finseqs.html#uniq_seq"><span class="id" title="record">uniq_seq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.choice.html#9bbd910cbebcec91f8279b0711b4702d"><span class="id" title="notation">)]</span></a>.<br/>
 
 <br/>
+<span class="id" title="keyword">Lemma</span> <a name="notinnil"><span class="id" title="lemma">notinnil</span></a> {<span class="id" title="var">A</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>} (<span class="id" title="var">x</span> : <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a>) : <a class="idref" href="octalgo.octalgo.finseqs.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">notin</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#0a934e621391740b862762275992e626"><span class="id" title="notation">[::]</span></a>.<br/>
+
+<br/>
 </div>
 
 <div class="doc">
-<a name="lab28"></a><h2 class="section">constructors for uniq_seq</h2>
+<a name="lab30"></a><h2 class="section">constructors for uniq_seq</h2>
 
 </div>
 <div class="code">
 <span class="id" title="keyword">Definition</span> <a name="unil"><span class="id" title="definition">unil</span></a> {<span class="id" title="var">A</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>} : @<a class="idref" href="octalgo.octalgo.finseqs.html#uniq_seq"><span class="id" title="record">uniq_seq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a>  := {| <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">useq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">:=</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">[::];</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">buniq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">:=</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">is_true_true</span></a> |}.<br/>
+<span class="id" title="keyword">Definition</span> <a name="ucons1"><span class="id" title="definition">ucons1</span></a> {<span class="id" title="var">A</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>} (<span class="id" title="var">t</span> : <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;{| <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">useq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">:=</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">[::</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">t</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">];</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">buniq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">:=</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">notinnil</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">t</span></a> |}.<br/>
 <span class="id" title="keyword">Definition</span> <a name="ucons"><span class="id" title="definition">ucons</span></a> {<span class="id" title="var">A</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>} (<span class="id" title="var">t</span> : <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">b</span> : <a class="idref" href="octalgo.octalgo.finseqs.html#uniq_seq"><span class="id" title="record">uniq_seq</span></a>) (<span class="id" title="var">H</span> : <a class="idref" href="octalgo.octalgo.finseqs.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">notin</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#useq"><span class="id" title="projection">useq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#b"><span class="id" title="variable">b</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">)</span></a>) : <a class="idref" href="octalgo.octalgo.finseqs.html#uniq_seq"><span class="id" title="record">uniq_seq</span></a> :=<br/>
 {| <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">useq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">:=</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">t</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">::</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">b</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">;</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">buniq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">:=</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">(</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">andP_to_uniq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">(</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">conj</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">H</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">(</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">buniq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">b</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#Build_uniq_seq"><span class="id" title="constructor">)))</span></a> |}.<br/>
+<span class="id" title="keyword">Definition</span> <a name="pucons"><span class="id" title="definition">pucons</span></a> {<span class="id" title="var">A</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>} (<span class="id" title="var">t</span> : <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">b</span> : @<a class="idref" href="octalgo.octalgo.finseqs.html#uniq_seq"><span class="id" title="record">uniq_seq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a>) : @<a class="idref" href="octalgo.octalgo.finseqs.html#uniq_seq"><span class="id" title="record">uniq_seq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a> :=<br/>
+&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Bool.Sumbool.html#sumbool_of_bool"><span class="id" title="definition">Sumbool.sumbool_of_bool</span></a> (<a class="idref" href="octalgo.octalgo.finseqs.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">notin</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">(</span></a><a class="idref" href="octalgo.octalgo.finseqs.html#useq"><span class="id" title="projection">useq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#b"><span class="id" title="variable">b</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.ssr.ssrbool.html#c1ad6bcc76a6221225111f87bc3b0c3d"><span class="id" title="notation">)</span></a>) <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Specif.html#left"><span class="id" title="constructor">left</span></a> <span class="id" title="var">H</span> ⇒ <a class="idref" href="octalgo.octalgo.finseqs.html#ucons"><span class="id" title="definition">ucons</span></a> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">in_right</span> ⇒ <a class="idref" href="octalgo.octalgo.finseqs.html#b"><span class="id" title="variable">b</span></a><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
 
 <br/>
 <span class="id" title="keyword">Lemma</span> <a name="uniq_behead"><span class="id" title="lemma">uniq_behead</span></a> {<span class="id" title="var">A</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>} (<span class="id" title="var">s</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#seq"><span class="id" title="abbreviation">seq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#A"><span class="id" title="variable">A</span></a>) : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#uniq"><span class="id" title="definition">uniq</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#uniq"><span class="id" title="definition">uniq</span></a> (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#behead"><span class="id" title="definition">behead</span></a> <a class="idref" href="octalgo.octalgo.finseqs.html#s"><span class="id" title="variable">s</span></a>).<br/>
@@ -110,7 +114,7 @@
 </div>
 
 <div class="doc">
-<a name="lab29"></a><h2 class="section">uniq_seq is a finType</h2>
+<a name="lab31"></a><h2 class="section">uniq_seq is a finType</h2>
 
 </div>
 <div class="code">
@@ -140,7 +144,7 @@
 </div>
 
 <div class="doc">
-<a name="lab30"></a><h1 class="section">Wlist: finite sequences, with a size bounded by a nat</h1>
+<a name="lab32"></a><h1 class="section">Wlist: finite sequences, with a size bounded by a nat</h1>
 
 </div>
 <div class="code">
@@ -150,7 +154,7 @@
 </div>
 
 <div class="doc">
-<a name="lab31"></a><h2 class="section">Definition</h2>
+<a name="lab33"></a><h2 class="section">Definition</h2>
 
 </div>
 <div class="code">
@@ -164,7 +168,7 @@
 </div>
 
 <div class="doc">
-<a name="lab32"></a><h2 class="section">Canceling lemmas</h2>
+<a name="lab34"></a><h2 class="section">Canceling lemmas</h2>
 
 </div>
 <div class="code">
@@ -212,7 +216,7 @@
 </div>
 
 <div class="doc">
-<a name="lab33"></a><h2 class="section">Wlist is a type with dedicable equality</h2>
+<a name="lab35"></a><h2 class="section">Wlist is a type with dedicable equality</h2>
 
 </div>
 <div class="code">
@@ -235,7 +239,7 @@
 </div>
 
 <div class="doc">
-<a name="lab34"></a><h2 class="section">Wlist is a subtype of seq</h2>
+<a name="lab36"></a><h2 class="section">Wlist is a subtype of seq</h2>
 
 </div>
 <div class="code">
@@ -295,7 +299,7 @@
 </div>
 
 <div class="doc">
-<a name="lab35"></a><h2 class="section">Wlist is a choice type</h2>
+<a name="lab37"></a><h2 class="section">Wlist is a choice type</h2>
 
 </div>
 <div class="code">
@@ -318,7 +322,7 @@
 </div>
 
 <div class="doc">
-<a name="lab36"></a><h2 class="section">Wlist is a count type</h2>
+<a name="lab38"></a><h2 class="section">Wlist is a count type</h2>
 
 </div>
 <div class="code">
@@ -348,7 +352,7 @@
 </div>
 
 <div class="doc">
-<a name="lab37"></a><h2 class="section">Wlist is a finite type</h2>
+<a name="lab39"></a><h2 class="section">Wlist is a finite type</h2>
 
 </div>
 <div class="code">
@@ -373,7 +377,7 @@
 </div>
 
 <div class="doc">
-<a name="lab38"></a><h2 class="section">Utility lemmas and definitions for Wlist</h2>
+<a name="lab40"></a><h2 class="section">Utility lemmas and definitions for Wlist</h2>
 
 </div>
 <div class="code">

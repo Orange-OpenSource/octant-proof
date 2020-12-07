@@ -22,11 +22,10 @@
 </div>
 
 <div class="doc">
-                                                                                                             The DatalogCert Library                                                                                                                           CNRS &amp; Université Paris-Sud, Université Paris-Saclay                                                                                                                         Copyright 2016-2019 : FormalData                                                                                                                   Authors: Véronique Benzaken                                                               Évelyne Contejean                                                                Stefania Dumbrava                                                                                                                               
+                                                                                                             The DatalogCert Library                                                                                                                           CNRS &amp; Université Paris-Sud, Université Paris-Saclay                                                                                                                         Copyright 2016-2019 : FormalData                                                                                                                   Original authors: Véronique Benzaken                                                               Évelyne Contejean                                                                Stefania Dumbrava                                                                                                                      
 <div class="paragraph"> </div>
 
- This is the fourth part of the original file "pengine.v" with a new part added
-    by Pierre-Léo Bégay 
+ Fourth part of the original file "pengine.v" with an additional new part 
 </div>
 <div class="code">
 
@@ -49,7 +48,7 @@
 </div>
 
 <div class="doc">
-<a name="lab96"></a><h1 class="section">Semantics of a Datalog program</h1>
+<a name="lab98"></a><h1 class="section">Semantics of a Datalog program</h1>
 
 </div>
 <div class="code">
@@ -59,12 +58,12 @@
 </div>
 
 <div class="doc">
-<a name="lab97"></a><h2 class="section">Consequences of a clause</h2>
+<a name="lab99"></a><h2 class="section">Consequences of a clause</h2>
 
 <div class="paragraph"> </div>
 
  one iteration of fwd_chain for a one-clause program  Given a clause <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a>:</span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#h"><span class="id" title="variable">h</span></a></span> <span class="inlinecode">:-</span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#b"><span class="id" title="variable">b</span></a></span> gives back <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#h"><span class="id" title="variable">h</span></a></span> for all <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> that match
- <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#b"><span class="id" title="variable">b</span></a></span> in interpretation <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span>. <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.def"><span class="id" title="variable">def</span></a></span> is usually not used as <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> should be safe and does not introduce variables in its head. 
+ <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#b"><span class="id" title="variable">b</span></a></span> in interpretation <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.i"><span class="id" title="variable">i</span></a></span>. <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.def"><span class="id" title="variable">def</span></a></span> is usually not used as <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.syntax.html#cl"><span class="id" title="variable">cl</span></a></span> should be safe and does not introduce variables in its head. 
 </div>
 <div class="code">
 <span class="id" title="keyword">Definition</span> <a name="cons_clause"><span class="id" title="definition">cons_clause</span></a> (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">cl</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#clause"><span class="id" title="inductive">clause</span></a>) <span class="id" title="var">i</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">{</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">set</span></a> <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.finset.html#d8708f36d374a98f4d683c7593d1ea6a"><span class="id" title="notation">}</span></a> :=<br/>
@@ -94,11 +93,11 @@ one iteration of fwd_chain for a program
 </div>
 
 <div class="doc">
-<a name="lab98"></a><h2 class="section">Semantic of a program up to m steps</h2>
+<a name="lab100"></a><h2 class="section">Semantic of a program up to m steps</h2>
 
 <div class="paragraph"> </div>
 
- <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.finseqs.html#d"><span class="id" title="variable">d</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#m"><span class="id" title="variable">m</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span> iterates fwd_chain m times over i. Added to the original files 
+ <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.p"><span class="id" title="variable">p</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.finseqs.html#d"><span class="id" title="variable">d</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#m"><span class="id" title="variable">m</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.i"><span class="id" title="variable">i</span></a></span> iterates fwd_chain m times over i. Added to the original files 
 </div>
 <div class="code">
 <span class="id" title="keyword">Definition</span> <a name="sem"><span class="id" title="definition">sem</span></a> (<span class="id" title="var">p</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>) (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) (<span class="id" title="var">i</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#interp"><span class="id" title="abbreviation">interp</span></a>) :=<br/>
@@ -108,17 +107,7 @@ one iteration of fwd_chain for a program
 </div>
 
 <div class="doc">
-<span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a></span> is increasing for subset 
-</div>
-<div class="code">
-<span class="id" title="keyword">Lemma</span> <a name="sem_m_incr"><span class="id" title="lemma">sem_m_incr</span></a> (<span class="id" title="var">p</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>) (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) (<span class="id" title="var">i</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#interp"><span class="id" title="abbreviation">interp</span></a>) :<br/>
-&nbsp;&nbsp;<a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#m"><span class="id" title="variable">m</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#bda89d73ec4a8f23ae92b565ffb5aaa6"><span class="id" title="notation">.+1</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#i"><span class="id" title="variable">i</span></a>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> has safe heads, 
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.p"><span class="id" title="variable">p</span></a></span> has safe heads, 
    <span class="inlinecode"><a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a></span> is safe (only defines elements in the IDB or it was in i_init 
 </div>
 <div class="code">
@@ -130,7 +119,7 @@ If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequ
 </div>
 
 <div class="doc">
-If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> has safe heads, any atom in the semantics from the EDB comes from <span class="inlinecode"><a class="idref" href="octalgo.octalgo.tSemantics.html#init"><span class="id" title="variable">init</span></a></span> 
+If <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.p"><span class="id" title="variable">p</span></a></span> has safe heads, any atom in the semantics from the EDB comes from <span class="inlinecode"><a class="idref" href="octalgo.octalgo.tSemantics.html#init"><span class="id" title="variable">init</span></a></span> 
 </div>
 <div class="code">
 <span class="id" title="keyword">Lemma</span> <a name="sem_idb_in"><span class="id" title="lemma">sem_idb_in</span></a> (<span class="id" title="var">p</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#program"><span class="id" title="definition">program</span></a>) (<span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) <span class="id" title="var">i_init</span> <span class="id" title="var">ga</span> :<br/>

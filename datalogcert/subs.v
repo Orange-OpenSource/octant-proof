@@ -6,14 +6,13 @@
 (**                                                                                 *)
 (**                        Copyright 2016-2019 : FormalData                         *)
 (**                                                                                 *)
-(**         Authors: Véronique Benzaken                                             *)
-(**                  Évelyne Contejean                                              *)
-(**                  Stefania Dumbrava                                              *)
+(**         Original authors: Véronique Benzaken                                    *)
+(**                           Évelyne Contejean                                     *)
+(**                           Stefania Dumbrava                                     *)
 (**                                                                                 *)
 (************************************************************************************)
 
-(** This is the second part of the original file "pengine.v" with some modifications
-    by Pierre-Léo Bégay *)
+(** Second part of the original file "pengine.v" with some modifications *)
 
 Require Import syntax.
 
@@ -445,6 +444,46 @@ by apply/eqP; rewrite eqEsubset; apply/andP; split;
 apply/subsetP=>x ; rewrite in_set ?ffunE ?in_set0.
 Qed.
 
+(** domain of a "singleton sub" is the relevant variable - added *)
+Lemma dom_singlesub v c : dom (add emptysub v c) = [set v].
+Proof.
+apply/eqP; rewrite eqEsubset; apply/andP; split;
+apply/subsetP=>x ; rewrite in_set ?ffunE ?in_set0.
+- destruct (bool_des_rew (x == v)) as [H|H]; rewrite ?H ?(eqP H);auto.
+  move=>Hb. by apply/set1P.
+- move=> H. by rewrite in_set ffunE H.
+Qed.
+
+(** equality of a "singleton sub" - added *)
+Lemma eq_singlesub s v c : 
+   dom s = [set v]
+-> s v = Some c
+-> s = add emptysub v c.
+Proof.
+move=> Hdom Heq.
+apply/ffunP;move=>x;rewrite ffunE.
+destruct (bool_des_rew (x == v)) as [Hxv|Hxv];rewrite Hxv.
+- by rewrite (eqP Hxv) Heq.
+- move:Hdom. move=>/eqP. rewrite eqEsubset. move=>/andP[/subsetP H1 H2].
+  destruct (sub_elim s x) as [[d Hd]|Hnone].
+  + assert (Hdom2 : x \in dom s). by rewrite in_set Hd.
+    rewrite (set1P (H1 x Hdom2)) eq_refl in Hxv. inversion Hxv.
+  + by rewrite Hnone ffunE.
+Qed.
+
+Lemma sub_dom (s1 s2 : sub) : 
+  s1 \sub s2 -> dom s1 \subset dom s2.
+-Proof.
+unfold sub_st.
+move=>H.
+apply/subsetP=>x.
+destruct (sub_elim s1 x) as [[c Hc]|Hnone].
+move=>Hb. rewrite in_set.
+have Ht := forallP H x. rewrite Hc mem_bindE in Ht.
+by rewrite (eqP Ht).
+by rewrite in_set Hnone.
+Qed.
+
 (** If [v] in the domain of [s], [v] cannot be in the result of applying [s]
    to an atom [a] *)
 Lemma v_in_dom_satom v s a : v \in dom s
@@ -643,6 +682,76 @@ destruct (bool_des_rew (x \in t)) as [Hxtyp|Hxtyp];
 destruct (bool_des_rew (x == v)) as [Hxv|Hxv];
 rewrite !ffunE ?Hxtyp ?Hxv;auto.
 by rewrite -(eqP Hxv) Hxtyp in Huntyped.
+Qed.
+
+Lemma atom_vars_sub_gr (a:atom) (s1 s2:sub) :
+   atom_vars a \subset dom s1 
+-> s1 \sub s2
+-> gr_atom (to_gr s1) a = gr_atom (to_gr s2) a.
+Proof.
+move=>Hasub Hsub.
+destruct a as [[g args] Ha].
+apply/val_inj.
+simpl. unfold gr_raw_atom.
+simpl. apply/f_equal. unfold atom_vars in Hasub.
+simpl in Hasub. clear Ha.
+induction args as [|[v|c] args Hrec];auto.
+simpl;apply/f_equal2.
+rewrite !ffunE.
+destruct (sub_elim s1 v) as [[c Hc]|Hnone].
+have Hf := forallP Hsub v. rewrite Hc mem_bindE in Hf.
+by rewrite Hc (eqP Hf).
+assert (Hvin : v \in dom s1).
+apply (subsetP Hasub). apply/bigcup_seqP.
+exists (Var v). apply/mem_head.
+apply/andP;split;auto. by apply/set1P.
+rewrite in_set Hnone in Hvin. inversion Hvin.
+apply/Hrec;auto. apply/subset_trans. 
+apply raw_atom_vars_cons_sub. apply Hasub.
+simpl. apply/f_equal.
+apply/Hrec;auto. apply/subset_trans. 
+apply raw_atom_vars_cons_sub. apply Hasub.
+Qed.
+
+Lemma atom_vars_sub_gr_def (a:atom) (s1 s2:sub) :
+   atom_vars a \subset dom s1 
+-> s1 \sub s2
+-> gr_atom_def s1 a = gr_atom_def s2 a.
+Proof.
+move=>Hasub Hsub.
+destruct a as [[g args] Ha].
+apply/val_inj.
+simpl. unfold gr_raw_atom_def.
+simpl. apply/f_equal. unfold atom_vars in Hasub.
+simpl in Hasub. clear Ha.
+induction args as [|[v|c] args Hrec];auto.
+simpl;apply/f_equal2. 
+destruct (sub_elim s1 v) as [[c Hc]|Hnone].
+have Hf := forallP Hsub v. rewrite Hc mem_bindE in Hf.
+by rewrite Hc (eqP Hf).
+assert (Hvin : v \in dom s1).
+apply (subsetP Hasub). apply/bigcup_seqP.
+exists (Var v). apply/mem_head.
+apply/andP;split;auto. by apply/set1P.
+rewrite in_set Hnone in Hvin. inversion Hvin.
+apply/Hrec;auto. apply/subset_trans. 
+apply raw_atom_vars_cons_sub. apply Hasub.
+simpl. apply/f_equal.
+apply/Hrec;auto. apply/subset_trans. 
+apply raw_atom_vars_cons_sub. apply Hasub.
+Qed.
+
+Lemma gr_term_def_eq_in_dom s1 s2 v1 v2 :
+   gr_term_def s1 (Var v1) = gr_term_def s2 (Var v2)
+-> v1 \in dom s1
+-> v2 \in dom s2
+-> s1 v1 = s2 v2.
+Proof.
+rewrite !in_set. simpl. unfold odflt. unfold oapp.
+destruct (sub_elim s1 v1) as [[c1 Hc1]|Hc1];
+destruct (sub_elim s2 v2) as [[c2 Hc2]|Hc2];
+rewrite Hc1 Hc2;move=>//.
+move=>-> //.
 Qed.
 
 End NoDepGrounding.

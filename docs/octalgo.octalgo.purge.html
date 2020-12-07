@@ -19,12 +19,6 @@
 <h1 class="libtitle">octalgo.octalgo.purge</h1>
 
 <div class="code">
-</div>
-
-<div class="doc">
-                                                                        This file is part of octant-proof.                                                                                                            Copyright (C) 2019-2020 Orange                                         License: LGPL-3.0-or-later                                           
-</div>
-<div class="code">
 
 <br/>
 <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="octalgo.datalogcert.syntax.html#"><span class="id" title="library">syntax</span></a>.<br/>
@@ -52,11 +46,11 @@
 </div>
 
 <div class="doc">
-<a name="lab119"></a><h1 class="section">Purging a program</h1>
+<a name="lab127"></a><h1 class="section">Purging a program</h1>
  The underlying idea of this section is that if we have computed the semantic
-  of our program and found all the values of the <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span>th argument of
-  atoms with symbol <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span>, now we can look at the clauses of our program and
-  remove all the clauses that contains atom with symbol <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> where the <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span>th
+  of our program and found all the values of the <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.i"><span class="id" title="variable">i</span></a></span>th argument of
+  atoms with symbol <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.f"><span class="id" title="variable">f</span></a></span>, now we can look at the clauses of our program and
+  remove all the clauses that contains atom with symbol <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.f"><span class="id" title="variable">f</span></a></span> where the <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.i"><span class="id" title="variable">i</span></a></span>th
   argument is another constant because they do not play a role in our semantics
    
 </div>
@@ -92,9 +86,9 @@ A set of value
 </div>
 
 <div class="doc">
-The hypothesis states that <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.vals"><span class="id" title="variable">vals</span></a></span> contains all the values of the <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.ind"><span class="id" title="variable">ind</span></a></span>eth
-   argument of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> that appear in the computation of the
-   semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> for interpretation <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span> 
+The hypothesis states that <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.vals"><span class="id" title="variable">vals</span></a></span> contains all the values of the <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.ind"><span class="id" title="variable">ind</span></a></span>eth
+   argument of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.f"><span class="id" title="variable">f</span></a></span> that appear in the computation of the
+   semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.p"><span class="id" title="variable">p</span></a></span> for interpretation <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.i"><span class="id" title="variable">i</span></a></span> 
 </div>
 <div class="code">
 <span class="id" title="keyword">Hypothesis</span> <a name="Purge.vals_adeq"><span class="id" title="variable">vals_adeq</span></a> : <span class="id" title="keyword">∀</span> (<span class="id" title="var">c</span> <span class="id" title="var">def</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#constant"><span class="id" title="inductive">syntax.constant</span></a>) (<span class="id" title="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.9.1/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) (<span class="id" title="var">ga</span> : <a class="idref" href="octalgo.datalogcert.syntax.html#gatom"><span class="id" title="record">gatom</span></a>),<br/>
@@ -106,7 +100,7 @@ The hypothesis states that <span class="inlinecode"><a class="idref" href="octal
 </div>
 
 <div class="doc">
-<span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#keep_atom"><span class="id" title="definition">keep_atom</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> filters out the atom <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> that have symbol <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.f"><span class="id" title="variable">f</span></a></span> and whose <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.ind"><span class="id" title="variable">ind</span></a></span>eth
+<span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#keep_atom"><span class="id" title="definition">keep_atom</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> filters out the atom <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> that have symbol <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.f"><span class="id" title="variable">f</span></a></span> and whose <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.ind"><span class="id" title="variable">ind</span></a></span>eth
   argument is a constant that is not in <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.vals"><span class="id" title="variable">vals</span></a></span> 
 </div>
 <div class="code">
@@ -150,8 +144,8 @@ We define pp as the restriction of p purged of non keepable clauses
 </div>
 
 <div class="doc">
-If there is a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> such that <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> is in the semantic of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span>,
-   then <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> can be kept. (ie it will not have as <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.ind"><span class="id" title="variable">ind</span></a></span> argument something that was
+If there is a substitution <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> such that <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> is in the semantic of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.p"><span class="id" title="variable">p</span></a></span> for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.i"><span class="id" title="variable">i</span></a></span>,
+   then <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#a"><span class="id" title="variable">a</span></a></span> can be kept. (ie it will not have as <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.ind"><span class="id" title="variable">ind</span></a></span> argument something that was
    not captured by <span class="inlinecode"><a class="idref" href="octalgo.octalgo.purge.html#Purge.vals"><span class="id" title="variable">vals</span></a></span> 
 </div>
 <div class="code">
@@ -161,7 +155,7 @@ If there is a substitution <span class="inlinecode"><a class="idref" href="octal
 </div>
 
 <div class="doc">
-if <span class="inlinecode"><a class="idref" href="octalgo.octalgo.fintrees.html#tl"><span class="id" title="variable">tl</span></a></span> can be extended by <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> to be in the semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.i"><span class="id" title="variable">i</span></a></span>, then
+if <span class="inlinecode"><a class="idref" href="octalgo.octalgo.fintrees.html#tl"><span class="id" title="variable">tl</span></a></span> can be extended by <span class="inlinecode"><a class="idref" href="octalgo.octalgo.utils.html#s"><span class="id" title="variable">s</span></a></span> to be in the semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.p"><span class="id" title="variable">p</span></a></span> for <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.i"><span class="id" title="variable">i</span></a></span>, then
    we can keep <span class="inlinecode"><a class="idref" href="octalgo.octalgo.fintrees.html#tl"><span class="id" title="variable">tl</span></a></span>.
 </div>
 <div class="code">
@@ -172,7 +166,7 @@ if <span class="inlinecode"><a class="idref" href="octalgo.octalgo.fintrees.html
 </div>
 
 <div class="doc">
-The semantics of the purged program contains the semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.depsubs_adequacy.html#ctyp_adequacy.p"><span class="id" title="variable">p</span></a></span> 
+The semantics of the purged program contains the semantics of <span class="inlinecode"><a class="idref" href="octalgo.octalgo.projection.html#Projection.p"><span class="id" title="variable">p</span></a></span> 
 </div>
 <div class="code">
 <span class="id" title="keyword">Lemma</span> <a name="purge_sem_completeness"><span class="id" title="lemma">purge_sem_completeness</span></a> : <span class="id" title="keyword">∀</span> <span class="id" title="var">m</span>, <a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.octalgo.purge.html#Purge.p"><span class="id" title="variable">p</span></a> <a class="idref" href="octalgo.octalgo.purge.html#Purge.def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.octalgo.purge.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.octalgo.purge.html#Purge.i"><span class="id" title="variable">i</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#4102da6205bd8605932488256a8bd517"><span class="id" title="notation">subset</span></a> <a class="idref" href="octalgo.datalogcert.bSemantics.html#sem"><span class="id" title="definition">sem</span></a> <a class="idref" href="octalgo.octalgo.purge.html#pp"><span class="id" title="definition">pp</span></a> <a class="idref" href="octalgo.octalgo.purge.html#Purge.def"><span class="id" title="variable">def</span></a> <a class="idref" href="octalgo.octalgo.purge.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="octalgo.octalgo.purge.html#Purge.i"><span class="id" title="variable">i</span></a>.<br/>
