@@ -36,27 +36,85 @@
 Visible on-line at: https://orange-opensource.github.io/octant-proof/
 
 
+# Files
+
+- Some files were not written by us (bigop_aux, fixpoint, completeness).
+
+- Others were originaly developed by Véronique Benzaken, Évelyne Contejean,
+and Stefania Dumbrava, but modified by us (syntax, subs, pmatch, bSemantics,
+monotonicity and soundness).
+
+  + all these files are found in the third_party and datalogcert folders.
+
+- Finally, some were fully written by us (utils, finseqs, fintrees, purge,
+  occurrences, projection, rinstance, tSemantics, static, extract_static,
+  norec_sem).
+
+  + these files are stored in the octalgo folder.
+
+- List of files
+
+  + bigop_aux.v:                 more bigop operators and properties
+  + utils.v:                     generic lemmas to ease the proofs and pset
+  + finseqs.v:                   sequence fintypes
+  + fintrees.v:                  tree fintypes
+  + syntax.v:                    Datalog syntax 
+  + subs.v:                      theory of substitutions
+  + pmatch.v:                    matching, both constructive and as a predicate
+  + bSemantics.v:                base and bounded Datalog semantics 
+  + monotonicity.v:              lemmas about semantics monotonicity
+  + soundness.v:                 soundness lemmas about the semantics
+  + fixpoint.v:                  fixpoint lemmas for the completeness part
+  + completeness.v:              completeness of the T_P mechanization
+  + occurrences.v:               defining the different kinds of program occurrences
+  + purge.v:                     transformations that delete useless clauses in a Datalog program, and their adequacy proofs
+  + tSemantics.v:                trace semantics
+  + static.v:                    definition and validation of the static analysis
+  + rinstance.v:                 partial instance of Datalog programs
+  + extract_static.v:            building substitutions for ctransfo using the static analysis
+  + projection.v:                definition and validation of the predicate specialization
+
+# Installation
+
+We recommend using opam. Here is the result of `opam list` giving
+the versions of the components we depend on:
+```
+# Name                 # Installed       # Synopsis
+coq                    8.9.1             Formal proof management system
+coq-equations          1.2.1+8.9         A function definition package for Coq
+coq-mathcomp-finmap    1.4.0             Finite sets, finite maps, finitely supported
+coq-mathcomp-ssreflect 1.8.0             Small Scale Reflection
+```
+
 # Assumptions 
 
 ## cadequacy
 
-Section Variables:
-subs_comp : [forall cl in p,
-               (0 < #|tail_vars (body_cl cl) :&: Rv|) ==>
-               [forall s,
-                  bmatch def ffp cl s ==>
-                  (sub_filter s Rv \in subs)]]
-subs : {set sub}
-p : program
-i : {set gatom}
-def : syntax.constant
-Rv : {set 'I_n}
-Axioms:
-symtype : finType
-n : nat
-constype : finType
-bn : nat
-arity : {ffun symtype -> nat}
+- Section Variables:
+
+  + subs_comp : [forall cl in p, (0 < #|tail_vars (body_cl cl) :&: Rv|) ==> [forall s, bmatch def ffp cl s ==> (sub_filter s Rv \in subs)]]
+
+  + subs : {set sub}
+
+  + p : program
+
+  + i : {set gatom}
+
+  + def : syntax.constant
+
+  + Rv : {set 'I_n}
+
+- Axioms:
+
+  + symtype : finType
+
+  + n : nat
+
+  + constype : finType
+
+  + bn : nat
+
+  + arity : {ffun symtype -> nat}
 
 
 - subs is the provided set of substitutions, and subs_comp is the associated 
@@ -75,32 +133,49 @@ arity : {ffun symtype -> nat}
 
 ## proj_completeness  
 
-Section Variables:
-pnotf : [forall c, pclone c != f]
-pinj : injective pclone
-pclone : syntax.constant -> symtype
-parity : [forall c, arity f == (arity (pclone c)).+1]
-p : program
-isafe : safe_edb i
-ind : 'I_(arity f)
-i : {set gatom}
-ftype : predtype f = Idb
-f : symtype
-def : syntax.constant
-bn_not_zero : 0 < bn
-arity_vars : arity f < n.+1
-always_cons : [forall cl in p,
-                 (hsym_cl cl == f) ==>
-                 [exists c,
-                    nth_error (arg_atom (head_cl cl))
-                      ind == Some (Val c)]]
-Axioms:
-symtype : finType
-predtype : {ffun symtype -> pred_type}
-n : nat
-constype : finType
-bn : nat
-arity : {ffun symtype -> nat}
+- Section Variables:
+
+  + pnotf : [forall c, pclone c != f]
+
+  + pinj : injective pclone
+
+  + pclone : syntax.constant -> symtype
+
+  + parity : [forall c, arity f == (arity (pclone c)).+1]
+
+  + p : program
+
+  + isafe : safe_edb i
+
+  + ind : 'I_(arity f)
+
+  + i : {set gatom}
+
+  + ftype : predtype f = Idb
+
+  + f : symtype
+
+  + def : syntax.constant
+
+  + bn_not_zero : 0 < bn
+
+  + arity_vars : arity f < n.+1
+
+  + always_cons : [forall cl in p, (hsym_cl cl == f) ==> [exists c, nth_error (arg_atom (head_cl cl)) ind == Some (Val c)]]
+
+- Axioms:
+
+  + symtype : finType
+
+  + predtype : {ffun symtype -> pred_type}
+
+  + n : nat
+
+  + constype : finType
+
+  + bn : nat
+
+  + arity : {ffun symtype -> nat}
 
 - pnotf, pinj, pclone and parity are used to build the new predicate names for
   the projection.
@@ -122,32 +197,49 @@ arity : {ffun symtype -> nat}
 ## proj_soundness  
 
 
-Section Variables:
-psafe : prog_safe p
-pnotf : [forall c, pclone c != f]
-pinj : injective pclone
-pfresh : [forall c, pclone c \notin sym_prog p]
-pclone : syntax.constant -> symtype
-parity : [forall c, arity f == (arity (pclone c)).+1]
-p : program
-ind : 'I_(arity f)
-ifresh : ~~ [exists x in i, is_clone_ga x]
-i : {set gatom}
-f : symtype
-def : syntax.constant
-bn_not_zero : 0 < bn
-arity_vars : arity f < n.+1
-always_cons : [forall cl in p,
-                 (hsym_cl cl == f) ==>
-                 [exists c,
-                    nth_error (arg_atom (head_cl cl))
-                      ind == Some (Val c)]]
-Axioms:
-symtype : finType
-n : nat
-constype : finType
-bn : nat
-arity : {ffun symtype -> nat}
+- Section Variables:
+
+  + psafe : prog_safe p
+
+  + pnotf : [forall c, pclone c != f]
+
+  + pinj : injective pclone
+
+  + pfresh : [forall c, pclone c \notin sym_prog p]
+
+  + pclone : syntax.constant -> symtype
+
+  + parity : [forall c, arity f == (arity (pclone c)).+1]
+
+  + p : program
+
+  + ind : 'I_(arity f)
+
+  + ifresh : ~~ [exists x in i, is_clone_ga x]
+
+  + i : {set gatom}
+
+  + f : symtype
+
+  + def : syntax.constant
+
+  + bn_not_zero : 0 < bn
+
+  + arity_vars : arity f < n.+1
+
+  + always_cons : [forall cl in p, (hsym_cl cl == f) ==> [exists c, nth_error (arg_atom (head_cl cl)) ind == Some (Val c)]]
+
+- Axioms:
+
+  + symtype : finType
+
+  + n : nat
+
+  + constype : finType
+
+  + bn : nat
+
+  + arity : {ffun symtype -> nat}
 
 - psafe states that the studied program p is safe, i.e. any variable that
   appears in a clause's head also appears in its body.
@@ -160,19 +252,25 @@ arity : {ffun symtype -> nat}
 
 ## trace_sem_completeness / trace_sem_soundness
 
-Section Variables:
-p : program
-gat_def : gatom
-Axioms:
-symtype : finType
-n : nat
-FunctionalExtensionality.functional_extensionality_dep : 
-forall (A : Type) (B : A -> Type)
-  (f g : forall x : A, B x),
-(forall x : A, f x = g x) -> f = g
-constype : finType
-bn : nat
-arity : {ffun symtype -> nat}
+- Section Variables:
+
+  + p : program
+
+  + gat_def : gatom
+
+- Axioms:
+
+  + symtype : finType
+
+  + n : nat
+
+  + FunctionalExtensionality.functional_extensionality_dep: forall (A : Type) (B : A -> Type) (f g : forall x : A, B x), (forall x : A, f x = g x) -> f = g
+
+  + constype : finType
+
+  + bn : nat
+
+  + arity : {ffun symtype -> nat}
 
 - p is a the studied program, gat_def a default ground atom (required by
   the wutree type).
@@ -182,22 +280,31 @@ arity : {ffun symtype -> nat}
 
 ## no_rec_needed
 
-Section Variables:
-p : program
-gat_def : gatom
-dv : 'I_n
-dt : term
-df : symtype
-Axioms:
-symtype : finType
-n : nat
-FunctionalExtensionality.functional_extensionality_dep : 
-forall (A : Type) (B : A -> Type)
-  (f g : forall x : A, B x),
-(forall x : A, f x = g x) -> f = g
-constype : finType
-bn : nat
-arity : {ffun symtype -> nat}
+- Section Variables:
+
+  + p : program
+
+  + gat_def : gatom
+
+  + dv : 'I_n
+
+  + dt : term
+
+  + df : symtype
+
+- Axioms:
+
+  + symtype : finType
+
+  + n : nat
+
+  + FunctionalExtensionality.functional_extensionality_dep: forall (A : Type) (B : A -> Type) (f g : forall x : A, B x), (forall x : A, f x = g x) -> f = g
+
+  + constype : finType
+
+  + bn : nat
+
+  + arity : {ffun symtype -> nat}
 
 - p is the studied program. get_def, dv, dt and df are default values, mostly
   used by the nth function.
@@ -207,23 +314,35 @@ arity : {ffun symtype -> nat}
 
 ## no_rec_capt_nf
 
-Section Variables:
-p : program
-gat_def : gatom
-dv : 'I_n
-dt : term
-docc : t_occ p
-df : symtype
-Axioms:
-symtype : finType
-predtype : {ffun symtype -> pred_type}
-n : nat
-FunctionalExtensionality.functional_extensionality_dep : 
-forall (A : Type) (B : A -> Type)
-  (f g : forall x : A, B x), (forall x : A, f x = g x) -> f = g
-constype : finType
-bn : nat
-arity : {ffun symtype -> nat}
+- Section Variables:
+
+  + p : program
+
+  + gat_def : gatom
+
+  + dv : 'I_n
+
+  + dt : term
+
+  + docc : t_occ p
+
+  + df : symtype
+
+- Axioms:
+
+  + symtype : finType
+
+  + predtype : {ffun symtype -> pred_type}
+
+  + n : nat
+
+  + FunctionalExtensionality.functional_extensionality_dep: forall (A : Type) (B : A -> Type) (f g : forall x : A, B x), (forall x : A, f x = g x) -> f = g
+
+  + constype : finType
+
+  + bn : nat
+
+  + arity : {ffun symtype -> nat}
 
 - p is the studied program.
 
@@ -240,31 +359,49 @@ arity : {ffun symtype -> nat}
 
 ## static_extraction_adequacy 
 
-Section Variables:
-v : 'I_n
-p : program
-i : {set gatom}
-dv : 'I_n
-docc : t_occ p
-dga : gatom
-df : symtype
-def : syntax.constant
-Hvns : vars_not_shared p
-Hvarinhead : only_variables_in_heads p
-Hsafe_edb : safe_edb i
-Hpsafehds : prog_safe_hds p
-Hpsafe : prog_safe p
-Axioms:
-symtype : finType
-predtype : {ffun symtype -> pred_type}
-n : nat
-FunctionalExtensionality.functional_extensionality_dep : 
-  forall (A : Type) (B : A -> Type)
-   (f g : forall x : A, B x),
-     (forall x : A, f x = g x) -> f = g
-constype : finType
-bn : nat
-arity : {ffun symtype -> nat}
+- Section Variables:
+
+  + v : 'I_n
+
+  + p : program
+
+  + i : {set gatom}
+
+  + dv : 'I_n
+
+  + docc : t_occ p
+
+  + dga : gatom
+
+  + df : symtype
+
+  + def : syntax.constant
+
+  + Hvns : vars_not_shared p
+
+  + Hvarinhead : only_variables_in_heads p
+
+  + Hsafe_edb : safe_edb i
+
+  + Hpsafehds : prog_safe_hds p
+
+  + Hpsafe : prog_safe p
+
+- Axioms:
+
+  + symtype : finType
+
+  + predtype : {ffun symtype -> pred_type}
+
+  + n : nat
+
+  + FunctionalExtensionality.functional_extensionality_dep: forall (A : Type) (B : A -> Type) (f g : forall x : A, B x), (forall x : A, f x = g x) -> f = g
+
+  + constype : finType
+
+  + bn : nat
+
+  + arity : {ffun symtype -> nat}
 
 - v is the analyzed variable, p the program, i the initial interpretation.
 
@@ -278,55 +415,4 @@ arity : {ffun symtype -> nat}
   the head of a clause also appears in its body.
 
 - functional_extensionality_dep is required by the trace semantics.
-  
 
-# Files
-
-- Some files were not written by us (bigop_aux, fixpoint, completeness).
-
-- Others were originaly developed by Véronique Benzaken, Évelyne Contejean,
-and Stefania Dumbrava, but modified by us (syntax, subs, pmatch, bSemantics,
-monotonicity and soundness).
-
-  + all these files are found in the third_party and datalogcert folders.
-
-- Finally, some were fully written by us (utils, finseqs, fintrees, purge,
-  occurrences, projection, rinstance, tSemantics, static, extract_static,
-  norec_sem).
-
-  + these files are stored in the octalgo folder.
-
-bigop_aux.v                - more bigop operators and properties
-utils.v                    - generic lemmas to ease the proofs and pset
-finseqs.v		   - sequence fintypes
-fintrees.v		   - tree fintypes
-syntax.v                   - Datalog syntax 
-subs.v                     - theory of substitutions
-pmatch.v                   - matching, both constructive and as a predicate
-bSemantics.v               - base and bounded Datalog semantics 
-monotonicity.v             - lemmas about semantics monotonicity
-soundness.v                - soundness lemmas about the semantics
-fixpoint.v                 - fixpoint lemmas for the completeness part
-completeness.v		   - completeness of the T_P mechanization
-occurrences.v              - defining the different kinds of program occurrences
-purge.v			   - transformations that delete useless clauses in 
-                             a Datalog program, and their adequacy proofs
-tSemantics.v               - trace semantics
-static.v                   - definition and validation of the static analysis
-rinstance.v		   - partial instance of Datalog programs
-extract_static.v           - building substitutions for ctransfo using the
-                             static analysis
-projection.v               - definition and validation of the predicate 
-                             specialization
-
-# Installation
-
-We recommend using opam. Here is the result of `opam list` giving
-the versions of the components we depend on:
-```
-# Name                 # Installed       # Synopsis
-coq                    8.9.1             Formal proof management system
-coq-equations          1.2.1+8.9         A function definition package for Coq
-coq-mathcomp-finmap    1.4.0             Finite sets, finite maps, finitely supported
-coq-mathcomp-ssreflect 1.8.0             Small Scale Reflection
-```
